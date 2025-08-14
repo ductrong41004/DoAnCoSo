@@ -1,0 +1,287 @@
+@model TourDuLich.Controllers.PaymentViewModel
+@{
+    ViewData["Title"] = "Thanh Toán Chuyển Khoản - " + Model.Tour.TourName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <!-- Header với đếm ngược -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="alert alert-warning text-center">
+                <h4 class="mb-2">
+                    <i class="bi bi-clock text-warning me-2"></i>
+                    Thời gian thanh toán còn lại: <span id="countdown" class="text-danger fw-bold">15:00</span>
+                </h4>
+                <p class="mb-0">Vui lòng hoàn tất thanh toán trong thời gian quy định</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thông tin đơn hàng -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-receipt me-2"></i>
+                        Thông tin đơn hàng #@Model.BookingId
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>🎯 Tour:</strong> @Model.Tour.TourName<br>
+                            <strong>📅 Ngày khởi hành:</strong> @Model.DepartureDate.ToString("dd/MM/yyyy")<br>
+                            <strong>👥 Số khách:</strong> @Model.TotalPassengers người
+                        </div>
+                        <div class="col-md-6">
+                            <strong>👤 Khách hàng:</strong> @Model.CustomerName<br>
+                            <strong>📧 Email:</strong> @Model.CustomerEmail<br>
+                            <strong>📱 Điện thoại:</strong> @Model.CustomerPhone
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thông tin thanh toán -->
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- QR Code -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-qr-code me-2"></i>
+                        Quét mã QR để thanh toán
+                    </h5>
+                </div>
+                <div class="card-body text-center">
+                    <div id="qrCodeContainer" class="p-4 bg-light rounded">
+                        <img id="qrCodeImage" src="" alt="QR Code VietQR" class="img-fluid" style="max-width: 300px;" />
+                        <div id="qrCodeLoading" class="text-muted">
+                            <div class="spinner-border text-primary me-2" role="status"></div>
+                            Đang tạo mã QR...
+                        </div>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Sử dụng app ngân hàng để quét mã QR và thanh toán
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Thông tin chuyển khoản -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0">
+                        <i class="bi bi-bank me-2"></i>
+                        Thông tin chuyển khoản
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="payment-info">
+                        <div class="info-row">
+                            <strong>🏦 Ngân hàng:</strong><br>
+                            <span class="text-primary">MB BANK</span>
+                        </div>
+                        <div class="info-row">
+                            <strong>💳 Số tài khoản:</strong><br>
+                            <code class="bg-light p-1 rounded">0010180808888</code>
+                        </div>
+                        <div class="info-row">
+                            <strong>👤 Chủ tài khoản:</strong><br>
+                            <span>CÔNG TY TNHH ĐỨC TRỌNG PQ</span>
+                        </div>
+                        <div class="info-row">
+                            <strong>💰 Số tiền:</strong><br>
+                            <span class="text-danger fw-bold fs-5">@Model.TotalAmount.ToString("N0") đ</span>
+                        </div>
+                        <div class="info-row">
+                            <strong>📝 Nội dung:</strong><br>
+                            <code class="bg-warning bg-opacity-25 p-1 rounded text-dark">Donhang#@(Model.BookingId) @Model.CustomerEmail @Model.CustomerPhone</code>
+                        </div>
+                        <div class="info-row">
+                            <strong>⏱️ Xử lý:</strong><br>
+                            <span class="text-success">1-2 giờ làm việc</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nút hành động -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="@Url.Action("Checkout", "Booking", new { id = Model.Tour.TourId })" 
+                           class="btn btn-outline-secondary btn-lg me-md-2">
+                            <i class="bi bi-arrow-left me-2"></i>
+                            Quay lại
+                        </a>
+                        <button type="button" class="btn btn-success btn-lg" onclick="confirmPayment()">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Đã thanh toán
+                        </button>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">
+                        <small>
+                            <i class="bi bi-shield-check me-1"></i>
+                            Chỉ nhấn "Đã thanh toán" sau khi đã chuyển khoản thành công
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .payment-info .info-row {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .payment-info .info-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    
+    #qrCodeContainer {
+        min-height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed #dee2e6;
+    }
+    
+    #qrCodeImage {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .countdown-expired {
+        background-color: #dc3545 !important;
+        color: white !important;
+    }
+</style>
+
+<script>
+    let countdownInterval; // Biến global để tránh conflict
+
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 Payment page loaded - Starting countdown and QR generation');
+
+        // Clear any existing intervals
+        if (countdownInterval) {
+            clearInterval(countdownInterval);
+        }
+
+        // Đếm ngược 15 phút
+        let timeLeft = 15 * 60; // 15 phút = 900 giây
+        const countdownElement = document.getElementById('countdown');
+
+        function updatePaymentCountdown() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            const displayTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            countdownElement.textContent = displayTime;
+
+            console.log(`⏰ Payment countdown: ${displayTime} (${timeLeft}s left)`);
+
+            if (timeLeft <= 0) {
+                // Hết thời gian
+                clearInterval(countdownInterval);
+                document.querySelector('.alert-warning').classList.add('countdown-expired');
+                countdownElement.textContent = 'HẾT THỜI GIAN';
+
+                setTimeout(() => {
+                    alert('Đã hết thời gian thanh toán! Đơn hàng sẽ bị hủy.');
+                    window.location.href = '@Url.Action("Index", "Tours")';
+                }, 1000);
+
+                return;
+            }
+
+            timeLeft--;
+        }
+
+        // Cập nhật mỗi giây
+        countdownInterval = setInterval(updatePaymentCountdown, 1000);
+        updatePaymentCountdown(); // Chạy ngay lần đầu
+
+        // Tạo QR Code với delay nhỏ
+        setTimeout(generateVietQR, 500);
+    });
+
+    function generateVietQR() {
+        console.log('🔄 Starting QR Code generation...');
+
+        const qrCodeImage = document.getElementById('qrCodeImage');
+        const qrCodeLoading = document.getElementById('qrCodeLoading');
+
+        // Hiển thị loading
+        qrCodeLoading.style.display = 'block';
+        qrCodeImage.style.display = 'none';
+
+        // Tạo URL VietQR với format đơn giản hơn
+        const amount = @(Model.TotalAmount.ToString("0")); // Đảm bảo số thuần không có dấu phẩy
+        const bookingId = @Model.BookingId;
+        const customerEmail = '@Model.CustomerEmail';
+        const customerPhone = '@Model.CustomerPhone';
+
+        // Format: "Donhang#8 tandung@gmail.com 0123456789"
+        const transferContent = `Donhang#${bookingId} ${customerEmail} ${customerPhone}`;
+
+        // Sử dụng URL trực tiếp từ VietQR (đơn giản và ổn định hơn)
+        const vietQRUrl = `https://img.vietqr.io/image/970422-0010180808888-compact2.jpg?amount=${amount}&addInfo=${encodeURIComponent(transferContent)}&accountName=${encodeURIComponent('CONG TY TNHH MTV DUC TRONG PQ')}`;
+
+        console.log('🔗 QR URL:', vietQRUrl);
+
+        qrCodeImage.onload = function() {
+            console.log('✅ QR Code loaded successfully');
+            qrCodeLoading.style.display = 'none';
+            qrCodeImage.style.display = 'block';
+        };
+
+        qrCodeImage.onerror = function() {
+            console.log('❌ QR Code failed to load, trying alternative...');
+            // Thử URL khác nếu lỗi
+            const altUrl = `https://api.vietqr.io/image/970422-0010180808888-compact.jpg?amount=${amount}&addInfo=${encodeURIComponent(transferContent)}`;
+            console.log('🔄 Trying alternative URL:', altUrl);
+
+            // Tạo image mới để test
+            const testImg = new Image();
+            testImg.onload = function() {
+                qrCodeImage.src = altUrl;
+                qrCodeLoading.style.display = 'none';
+                qrCodeImage.style.display = 'block';
+            };
+            testImg.onerror = function() {
+                qrCodeLoading.innerHTML = '<i class="bi bi-exclamation-triangle text-warning"></i> Không thể tạo mã QR<br><small>Vui lòng chuyển khoản thủ công</small>';
+            };
+            testImg.src = altUrl;
+        };
+
+        // Set src để bắt đầu load
+        qrCodeImage.src = vietQRUrl;
+
+        // Bắt đầu đếm ngược ngay lập tức
+        startCountdown();
+    }
+    
+    function confirmPayment() {
+        if (confirm('Bạn đã chuyển khoản thành công? Chúng tôi sẽ xác nhận thanh toán trong 1-2 giờ làm việc.')) {
+            // Chuyển đến trang danh sách tour đã đặt
+            window.location.href = '@Url.Action("MyBookings", "Booking")';
+        }
+    }
+</script>

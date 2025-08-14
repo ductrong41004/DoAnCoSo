@@ -1,0 +1,189 @@
+@model TourDuLich.Models.Tour
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Xem Hành Trình - " + Model.TourName;
+}
+
+<div class="container mt-4">
+    <!-- Tieu de trang -->
+    <div class="page-title">
+        <h2><i class="bi bi-map"></i> Hành Trình Chi Tiết</h2>
+    </div>
+
+    <!-- Thong tin tour -->
+    <div class="admin-box mb-4">
+        <div class="row">
+            <div class="col-md-8">
+                <h3 class="text-primary mb-3">@Model.TourName</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Danh mục:</strong> <span class="badge bg-primary">@Model.GetCategoryDisplayName()</span></p>
+                        <p><strong>Giá:</strong> <span class="text-success fw-bold">@Model.Price.ToString("N0") đ</span></p>
+                        <p><strong>Thời gian:</strong> @Model.Duration</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Địa điểm:</strong> @Model.Location</p>
+                        <p><strong>Phương tiện:</strong> @Model.Transportation</p>
+                        <p><strong>Khởi hành từ:</strong> @Model.DepartureFrom</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-end">
+                <a asp-action="EditItinerary" asp-route-id="@Model.TourId" class="btn btn-warning btn-lg">
+                    <i class="bi bi-pencil-square me-2"></i> Cập nhật hành trình
+                </a>
+                <a asp-action="Index" class="btn btn-secondary btn-lg mt-2">
+                    <i class="bi bi-arrow-left me-2"></i> Quay lại
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hanh trinh chi tiet -->
+    <div class="admin-box">
+        <h4 class="text-primary mb-4">
+            <i class="bi bi-calendar-week me-2"></i> Hành Trình Từng Ngày
+        </h4>
+
+        @if (!string.IsNullOrEmpty(Model.Itinerary))
+        {
+            var itineraryDays = Model.GetItineraryDays();
+            if (itineraryDays.Any())
+            {
+                <div class="timeline">
+                    @for (int i = 0; i < itineraryDays.Count; i++)
+                    {
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-primary">
+                                <i class="bi bi-calendar-day text-white"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6 class="text-primary">Ngày @(i + 1)</h6>
+                                <div class="timeline-description">
+                                    @Html.Raw(itineraryDays[i].Replace("\n", "<br>"))
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    Dữ liệu hành trình không hợp lệ. Vui lòng cập nhật lại.
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-info text-center">
+                <i class="bi bi-info-circle me-2"></i>
+                Tour này chưa có hành trình chi tiết.
+                <br>
+                <a asp-action="EditItinerary" asp-route-id="@Model.TourId" class="btn btn-primary mt-3">
+                    <i class="bi bi-plus-circle me-2"></i> Thêm hành trình ngay
+                </a>
+            </div>
+        }
+    </div>
+
+    <!-- Ngay khoi hanh -->
+    <div class="admin-box mt-4">
+        <h4 class="text-primary mb-4">
+            <i class="bi bi-calendar-check me-2"></i> Lịch Khởi Hành
+        </h4>
+
+        @if (!string.IsNullOrEmpty(Model.DepartureDates))
+        {
+            var departureDates = Model.GetDepartureDatesWithSeats();
+            if (departureDates.Any())
+            {
+                <div class="row">
+                    @foreach (var departure in departureDates.Take(6))
+                    {
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-primary">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-primary">
+                                        @departure.Key.ToString("dd/MM/yyyy")
+                                    </h6>
+                                    <p class="card-text">
+                                        <span class="badge bg-info">@departure.Value chỗ</span>
+                                    </p>
+                                    <small class="text-muted">
+                                        @departure.Key.ToString("dddd", new System.Globalization.CultureInfo("vi-VN"))
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                
+                @if (departureDates.Count > 6)
+                {
+                    <div class="text-center mt-3">
+                        <small class="text-muted">Và @(departureDates.Count - 6) ngày khởi hành khác...</small>
+                    </div>
+                }
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning text-center">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                Tour này chưa có lịch khởi hành.
+            </div>
+        }
+    </div>
+</div>
+
+<!-- CSS cho timeline -->
+<style>
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 25px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #2196F3, #4CAF50, #FF9800);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -2rem;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.timeline-content {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #2196F3;
+}
+
+.timeline-description {
+    line-height: 1.6;
+    color: #495057;
+}
+</style>

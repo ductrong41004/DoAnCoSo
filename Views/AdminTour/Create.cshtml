@@ -1,0 +1,270 @@
+﻿@model TourDuLich.Models.Tour
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Thêm mới Tour";
+}
+
+<div class="container mt-4">
+    @{
+        var currentUserType = ViewBag.CurrentUserType as int?;
+    }
+
+    @if (currentUserType != 1 && currentUserType != 2)
+    {
+        <!-- ❌ KHÔNG CÓ QUYỀN - VIP + ADMIN -->
+        <div class="alert alert-danger text-center" style="border-radius: 20px; border: 2px solid #dc3545; box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);">
+            <div class="py-5">
+                <i class="bi bi-shield-exclamation display-1 text-danger mb-3"></i>
+                <h2 class="text-danger fw-bold">🚫 TRUY CẬP BỊ TỪ CHỐI</h2>
+                <p class="lead mb-4">Bạn không có quyền truy cập vào trang tạo Tour!</p>
+                <p class="text-muted">Chỉ có <strong>Khách VIP (VIP)</strong> và <strong>Quản trị viên (Admin)</strong> mới được phép truy cập trang này.</p>
+                <div class="mt-4">
+                    <a href="@Url.Action("Index", "Tours")" class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-house-door me-2"></i> Về trang chủ
+                    </a>
+                    <a href="javascript:history.back()" class="btn btn-secondary btn-lg px-5 ms-3">
+                        <i class="bi bi-arrow-left me-2"></i> Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- ✅ CÓ QUYỀN - VIP + ADMIN -->
+        <!-- Tiêu đề trang nổi bật -->
+        <div class="page-title">
+            <h2><i class="bi bi-airplane-engines-fill"></i> Thêm mới Tour Du Lịch</h2>
+        </div>
+
+        <!-- Form với thiết kế đẹp -->
+        <div class="form-container-modern">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+
+                <!-- Hàng 1: Tên Tour + Địa điểm -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label asp-for="TourName" class="form-label">
+                                <i class="bi bi-tag-fill text-primary me-2"></i>Tên Tour
+                            </label>
+                            <input asp-for="TourName" class="form-control form-control-modern" placeholder="Nhập tên tour..." />
+                            <span asp-validation-for="TourName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label asp-for="Location" class="form-label">
+                                <i class="bi bi-geo-alt-fill text-success me-2"></i>Địa điểm Tour
+                            </label>
+                            <input asp-for="Location" class="form-control form-control-modern" placeholder="VD: Đà Nẵng, Phú Quốc..." />
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mô tả Tour -->
+                <div class="mb-4">
+                    <label asp-for="Description" class="form-label">
+                        <i class="bi bi-card-text text-info me-2"></i>Mô tả Tour
+                    </label>
+                    <textarea asp-for="Description" class="form-control form-control-modern" rows="4" placeholder="Mô tả tour chi tiết..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <!-- Hành trình Tour -->
+                <div class="mb-4">
+                    <label asp-for="Itinerary" class="form-label">
+                        <i class="bi bi-map text-success me-2"></i>Hành Trình Chi Tiết
+                    </label>
+                    <div class="alert alert-info mb-2">
+                        <small><strong>Hướng dẫn:</strong> Nhập hành trình từng ngày, mỗi ngày cách nhau bằng "||".
+                        Ví dụ: Ngày 1: Khởi hành...||Ngày 2: Tham quan...||Ngày 3: Về...</small>
+                    </div>
+                    <textarea asp-for="Itinerary" class="form-control form-control-modern" rows="8"
+                              placeholder="Ngày 1: Khởi hành từ TP.HCM...||Ngày 2: Tham quan địa điểm A...||Ngày 3: Về TP.HCM"></textarea>
+                    <span asp-validation-for="Itinerary" class="text-danger"></span>
+                </div>
+
+                <!-- Hàng 2: Giá + Thời gian + Phân loại -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <label asp-for="Price" class="form-label">
+                                <i class="bi bi-currency-dollar text-warning me-2"></i>Giá Tour
+                            </label>
+                            <input asp-for="Price" class="form-control form-control-modern" type="number" min="0" placeholder="VNĐ" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <label asp-for="Duration" class="form-label">
+                                <i class="bi bi-clock-fill text-info me-2"></i>Thời gian Tour
+                            </label>
+                            <input asp-for="Duration" class="form-control form-control-modern" placeholder="VD: 3 ngày 2 đêm" />
+                            <span asp-validation-for="Duration" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <label asp-for="Category" class="form-label">
+                                <i class="bi bi-globe text-primary me-2"></i>Phân loại Tour
+                            </label>
+                            <select asp-for="Category" class="form-control form-control-modern">
+                                <option value="0">Tour Miền Bắc</option>
+                                <option value="1">Tour Miền Trung</option>
+                                <option value="2">Tour Miền Nam</option>
+                                <option value="3">Tour Du Lịch Châu Á</option>
+                                <option value="4">Tour Du Lịch Âu-Úc-Mỹ-Phi</option>
+                            </select>
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hàng 3: Phương tiện + Xuất phát từ -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label asp-for="Transportation" class="form-label">
+                                <i class="bi bi-bus-front text-primary me-2"></i>Phương Tiện
+                            </label>
+                            <input asp-for="Transportation" class="form-control form-control-modern" placeholder="VD: Máy bay, Xe khách, Tàu hỏa..." />
+                            <span asp-validation-for="Transportation" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label asp-for="DepartureFrom" class="form-label">
+                                <i class="bi bi-signpost-2 text-success me-2"></i>Xuất phát Từ
+                            </label>
+                            <input asp-for="DepartureFrom" class="form-control form-control-modern" placeholder="VD: TP.HCM, Hà Nội, Đà Nẵng..." />
+                            <span asp-validation-for="DepartureFrom" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Hàng 4: Các ngày khởi hành với số chỗ -->
+                <div class="mb-4">
+                    <label class="form-label">
+                        <i class="bi bi-calendar-week text-danger me-2"></i>Các ngày khởi hành & Số chỗ
+                    </label>
+                    <div id="departure-dates-container">
+                        <div class="departure-date-item mb-3 p-3 border rounded bg-light">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-label small">📅 Ngày khởi hành</label>
+                                    <input type="datetime-local" name="DepartureDates" class="form-control form-control-modern" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label small">👥 Số chỗ</label>
+                                    <input type="number" name="DepartureSeats" class="form-control form-control-modern" min="1" max="100" placeholder="30" />
+                                </div>
+                                <div class="col-md-1 d-flex align-items-end">
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="removeDateInput(this)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success btn-sm mt-2" onclick="addDateInput()">
+                        <i class="bi bi-plus-circle me-1"></i>Thêm ngày khởi hành
+                    </button>
+                    <small class="form-text text-muted">Mỗi ngày khởi hành có thể có số chỗ khác nhau</small>
+                </div>
+
+                <!-- Ảnh Tour -->
+                <div class="mb-4">
+                    <label class="form-label">
+                        <i class="bi bi-images text-primary me-2"></i>Ảnh Tour
+                    </label>
+                    <input type="file" class="form-control form-control-modern" name="imageFiles" accept="image/*" multiple id="fileInput" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    <div class="custom-file-preview mt-3" id="previewImages"></div>
+                </div>
+
+                <!-- Nút submit -->
+                <div class="mt-5 text-center">
+                    <button type="submit" class="btn btn-success btn-lg px-5 me-3">
+                        <i class="bi bi-check2-circle me-2"></i> Lưu Tour
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary btn-lg px-5">
+                        <i class="bi bi-arrow-left me-2"></i> Quay lại
+                    </a>
+                </div>
+            </form>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Hiển thị ảnh preview khi chọn file
+        document.addEventListener('DOMContentLoaded', function () {
+            var input = document.getElementById('fileInput');
+            var preview = document.getElementById('previewImages');
+            if (input) {
+                input.addEventListener('change', function () {
+                    preview.innerHTML = '';
+                    if (this.files.length > 0) {
+                        preview.innerHTML = '<h6 class="text-primary mb-3"><i class="bi bi-eye me-2"></i>Xem trước ảnh:</h6>';
+                        Array.from(this.files).forEach(file => {
+                            if (file && file.type.startsWith('image/')) {
+                                var reader = new FileReader();
+                                reader.onload = function (e) {
+                                    var img = document.createElement('img');
+                                    img.src = e.target.result;
+                                    img.className = 'preview-image';
+                                    preview.appendChild(img);
+                                }
+                                reader.readAsDataURL(file);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        // JavaScript cho việc thêm/xóa ngày khởi hành với số chỗ
+        function addDateInput() {
+            const container = document.getElementById('departure-dates-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'departure-date-item mb-3 p-3 border rounded bg-light';
+            newItem.innerHTML = `
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="form-label small">📅 Ngày khởi hành</label>
+                        <input type="datetime-local" name="DepartureDates" class="form-control form-control-modern" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small">👥 Số chỗ</label>
+                        <input type="number" name="DepartureSeats" class="form-control form-control-modern" min="1" max="100" placeholder="30" />
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeDateInput(this)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newItem);
+        }
+
+        function removeDateInput(button) {
+            const container = document.getElementById('departure-dates-container');
+            if (container.children.length > 1) {
+                button.closest('.departure-date-item').remove();
+            } else {
+                alert('Phải có ít nhất một ngày khởi hành!');
+            }
+        }
+    </script>
+}

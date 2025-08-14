@@ -1,0 +1,144 @@
+@model TourDuLich.Models.Tour
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Cập Nhật Hành Trình - " + Model.TourName;
+}
+
+<div class="container mt-4">
+    <!-- Tieu de trang -->
+    <div class="page-title">
+        <h2><i class="bi bi-pencil-square"></i> Cập Nhật Hành Trình</h2>
+    </div>
+
+    <!-- Thong bao -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Thong tin tour -->
+    <div class="admin-box mb-4">
+        <h3 class="text-primary mb-3">@Model.TourName</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <p><strong>Danh mục:</strong> <span class="badge bg-primary">@Model.GetCategoryDisplayName()</span></p>
+                <p><strong>Giá:</strong> <span class="text-success fw-bold">@Model.Price.ToString("N0") đ</span></p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Địa điểm:</strong> @Model.Location</p>
+                <p><strong>Thời gian:</strong> @Model.Duration</p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Phương tiện:</strong> @Model.Transportation</p>
+                <p><strong>Khởi hành từ:</strong> @Model.DepartureFrom</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form cap nhat hanh trinh -->
+    <div class="form-container-modern">
+        <form asp-action="EditItinerary" method="post">
+            <input type="hidden" asp-for="TourId" />
+            
+            <div class="mb-4">
+                <label class="form-label fw-bold">
+                    <i class="bi bi-map me-2"></i> Hành Trình Chi Tiết
+                </label>
+                <div class="alert alert-info">
+                    <strong>Hướng dẫn:</strong> Nhập hành trình từng ngày, mỗi ngày cách nhau bằng dấu "||" (hai dấu gạch dọc).
+                    <br>
+                    <strong>Ví dụ:</strong> Ngày 1: Khởi hành từ TP.HCM...||Ngày 2: Tham quan địa điểm A...||Ngày 3: Về TP.HCM
+                </div>
+                <textarea name="itinerary" class="form-control form-control-modern" rows="15" 
+                          placeholder="Nhập hành trình chi tiết từng ngày...">@Model.Itinerary</textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-lg px-5 me-3">
+                    <i class="bi bi-check-circle me-2"></i> Lưu Hành Trình
+                </button>
+                <a asp-action="ViewItinerary" asp-route-id="@Model.TourId" class="btn btn-secondary btn-lg px-5 me-3">
+                    <i class="bi bi-eye me-2"></i> Xem Hành Trình
+                </a>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-5">
+                    <i class="bi bi-arrow-left me-2"></i> Quay Lại
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Huong dan chi tiet -->
+    <div class="admin-box mt-4">
+        <h5 class="text-primary mb-3">
+            <i class="bi bi-info-circle me-2"></i> Hướng Dẫn Chi Tiết
+        </h5>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="text-success">✅ Cách viết hành trình:</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">• Mỗi ngày là một đoạn văn riêng biệt</li>
+                    <li class="mb-2">• Sử dụng "||" để phân tách các ngày</li>
+                    <li class="mb-2">• Có thể sử dụng HTML đơn giản (br, strong, em)</li>
+                    <li class="mb-2">• Nên bắt đầu mỗi ngày bằng "Ngày X:"</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6 class="text-warning">⚠️ Lưu ý:</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">• Không sử dụng ký tự đặc biệt khác</li>
+                    <li class="mb-2">• Kiểm tra kỹ trước khi lưu</li>
+                    <li class="mb-2">• Hành trình sẽ hiển thị trên trang chi tiết tour</li>
+                    <li class="mb-2">• Có thể cập nhật bất cứ lúc nào</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-light rounded">
+            <h6 class="text-primary">📝 Ví dụ mẫu:</h6>
+            <code class="d-block mt-2" style="white-space: pre-line; font-size: 0.9rem;">
+Ngày 1: Khởi hành từ TP. Hồ Chí Minh
+- 06:00: Tập trung tại sân bay Tân Sơn Nhất
+- 08:00: Bay đến Hà Nội
+- 12:00: Dùng cơm trưa, nhận phòng khách sạn
+- 14:00: Tham quan Hồ Hoàn Kiếm, Đền Ngọc Sơn
+- 18:00: Dùng cơm tối, nghỉ ngơi||Ngày 2: Tham quan Hạ Long
+- 07:00: Dùng sáng tại khách sạn
+- 08:00: Khởi hành đi Hạ Long (3.5 giờ)
+- 12:00: Lên du thuyền, dùng cơm trưa
+- 14:00: Tham quan Động Thiên Cung
+- 16:00: Tắm biển tại bãi Titop
+- 19:00: Dùng cơm tối trên thuyền, nghỉ đêm trên vịnh
+            </code>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-resize textarea
+document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.querySelector('textarea[name="itinerary"]');
+    if (textarea) {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+        
+        // Initial resize
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+    }
+});
+</script>

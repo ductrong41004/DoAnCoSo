@@ -1,0 +1,2440 @@
+/* ========================================
+   TOUR DU LICH - TONG HOP CSS STYLES
+   ======================================== */
+
+/* ===== CAC STYLE TONG QUAT ===== */
+body {
+    background: #f3f7fa;
+    overflow-x: visible !important;
+}
+
+/* Cuon trang muot ma */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ===== HIEU UNG NAVBAR BRAND ===== */
+.navbar-brand {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: #FFD700;
+    position: relative;
+    background: linear-gradient(270deg, #FFD700, #FF4500, #00BFFF, #FFD700);
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbowMove 8s ease infinite;
+    -webkit-animation: rainbowMove 8s ease infinite;
+}
+
+@keyframes rainbowMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@-webkit-keyframes rainbowMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ===== HOP CHAO MUNG NGUOI DUNG ===== */
+.user-welcome-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 6px 18px;
+    border-radius: 30px;
+    background: linear-gradient(145deg, #1e90ff, #0066ff);
+    box-shadow: 0 0 8px #66b3ff, inset 0 0 8px #3385ff;
+    font-weight: 600;
+    color: white;
+    font-size: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.user-welcome-box:hover {
+    box-shadow: 0 0 12px #99ccff, inset 0 0 12px #4da6ff;
+}
+
+/* ===== NUT DANG XUAT ===== */
+.btn-logout {
+    background: #ff4d4f;
+    border: none;
+    font-weight: 700;
+    padding: 5px 18px;
+    font-size: 0.9rem;
+    border-radius: 30px;
+    color: white;
+    box-shadow: 0 0 12px #ff6666;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-logout:hover {
+    background: #cc0000;
+    box-shadow: 0 0 20px #ff4d4d;
+    transform: translateY(-2px) scale(1.05);
+}
+
+.btn-logout-separate {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(220, 53, 69, 0.3);
+}
+
+.btn-logout-separate:hover {
+    background: linear-gradient(135deg, #c82333 0%, #a71e2a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(220, 53, 69, 0.5);
+    color: white;
+}
+
+/* ===== THIET KE NAVBAR HIEN DAI ===== */
+.modern-navbar {
+    background: linear-gradient(135deg, #1e90ff 0%, #4169e1 50%, #0066cc 100%) !important;
+    box-shadow: 0 4px 20px rgba(30, 144, 255, 0.3);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    z-index: 1050 !important;
+    overflow: visible !important;
+}
+
+/* Hieu ung nen dong */
+.modern-navbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.modern-navbar .navbar-brand {
+    font-weight: 800 !important;
+    font-size: 1.5rem !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.modern-navbar .navbar-brand:hover {
+    transform: scale(1.05);
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.modern-navbar .navbar-brand i {
+    margin-right: 8px;
+    animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.modern-navbar .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 600;
+    padding: 8px 16px !important;
+    margin: 0 4px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.modern-navbar .navbar-nav .nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modern-navbar .btn {
+    border-radius: 25px !important;
+    font-weight: 600;
+    padding: 8px 20px !important;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modern-navbar .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.modern-navbar .btn-warning {
+    background: linear-gradient(45deg, #ffc107, #ffb300) !important;
+    border: none !important;
+}
+
+.modern-navbar .btn-info {
+    background: linear-gradient(45deg, #17a2b8, #138496) !important;
+    border: none !important;
+}
+
+.modern-navbar .btn-success {
+    background: linear-gradient(45deg, #28a745, #20c997) !important;
+    border: none !important;
+}
+
+.modern-navbar .btn-danger {
+    background: linear-gradient(45deg, #dc3545, #c82333) !important;
+    border: none !important;
+}
+
+.modern-navbar .container-fluid {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* NUT DROPDOWN ADMIN GON GANG */
+.modern-navbar .dropdown-toggle {
+    padding: 6px 12px !important;
+    font-size: 0.85rem !important;
+    border-radius: 20px !important;
+}
+
+.modern-navbar .dropdown-toggle i {
+    font-size: 0.9rem !important;
+    margin-right: 4px !important;
+}
+
+/* ===== SUA LOI NAVBAR RESPONSIVE ===== */
+.navbar-nav {
+    overflow: visible !important;
+}
+
+.nav-item.dropdown {
+    position: relative !important;
+}
+
+.container-fluid {
+    overflow: visible !important;
+}
+
+/* ===== THE DU LICH CAO CAP ===== */
+.luxury-card {
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.luxury-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+}
+
+/* THE VIP - MAU XANH HOA HAP */
+.vip-card {
+    border-left: 4px solid #4169e1;
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+    box-shadow: 0 4px 20px rgba(65, 105, 225, 0.15);
+}
+
+.vip-card:hover {
+    box-shadow: 0 8px 30px rgba(65, 105, 225, 0.25);
+}
+
+.vip-card .plane-icon {
+    font-size: 1.1rem;
+    color: #4169e1;
+    margin-right: 4px;
+}
+
+.vip-card .greeting-text {
+    color: #2c5aa0;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+}
+
+.vip-card .customer-name {
+    color: #1e3a8a;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+}
+
+.vip-card .exclamation {
+    color: #2c5aa0;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.vip-card .diamond-icon {
+    font-size: 1rem;
+    color: #4169e1;
+    margin: 0 4px;
+}
+
+.vip-card .vip-text {
+    color: #4169e1;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* THE ADMIN - MAU XANH CAO CAP */
+.admin-card {
+    border-left: 4px solid #0066cc;
+    background: linear-gradient(135deg, #f8fbff 0%, #e8f4fd 100%);
+    box-shadow: 0 4px 20px rgba(0, 102, 204, 0.15);
+}
+
+.admin-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 102, 204, 0.25);
+}
+
+.admin-card .jet-icon {
+    font-size: 1.2rem;
+    color: #0066cc;
+    margin-right: 4px;
+}
+
+.admin-card .greeting-text {
+    color: #1e4a72;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+}
+
+.admin-card .customer-name {
+    color: #003d82;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.admin-card .exclamation {
+    color: #1e4a72;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.admin-card .crown-icon {
+    font-size: 1rem;
+    color: #0066cc;
+    margin: 0 4px;
+}
+
+.admin-card .admin-text {
+    color: #0066cc;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* THE THUONG - MAU XANH NHAT */
+.normal-card {
+    border-left: 4px solid #17a2b8;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    box-shadow: 0 4px 20px rgba(23, 162, 184, 0.15);
+}
+
+.normal-card:hover {
+    box-shadow: 0 8px 30px rgba(23, 162, 184, 0.25);
+}
+
+.normal-card .greeting-text {
+    color: #0c5460;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+}
+
+.normal-card .customer-name {
+    color: #0369a1;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+}
+
+.normal-card .normal-text {
+    color: #17a2b8;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* XOA CAC HIEU UNG TRE CON */
+.luxury-sparkles, .luxury-effects {
+    display: none;
+}
+
+/* ===== STYLE MENU DROPDOWN - GON GANG ===== */
+.dropdown-menu {
+    z-index: 1060 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 6px !important;
+    padding: 4px 0 !important;
+    margin-top: 4px !important;
+    min-width: 160px !important;
+    max-width: 180px !important;
+}
+
+.dropdown-item {
+    padding: 6px 12px !important;
+    font-weight: 500 !important;
+    font-size: 0.85rem !important;
+    transition: all 0.2s ease !important;
+    white-space: nowrap !important;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa !important;
+    color: #1e90ff !important;
+}
+
+.dropdown-item i {
+    width: 16px !important;
+    text-align: center !important;
+    font-size: 0.8rem !important;
+    margin-right: 6px !important;
+}
+
+.dropdown-menu.show {
+    display: block !important;
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    z-index: 1060 !important;
+    min-width: 160px !important;
+    max-width: 180px !important;
+    transform: translateX(0) !important;
+}
+
+/* ===== STYLE HUY HIEU VIP ===== */
+.vip-badge-container {
+    position: relative;
+    display: inline-block;
+}
+
+.vip-badge {
+    background: linear-gradient(135deg, #ffd700 0%, #ffb300 50%, #ff8f00 100%);
+    color: #000;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    border: 2px solid #fff;
+    position: relative;
+    overflow: hidden;
+    animation: vipGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes vipGlow {
+    from { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); }
+    to { box-shadow: 0 6px 25px rgba(255, 215, 0, 0.8); }
+}
+
+.vip-icon {
+    margin-right: 6px;
+    animation: vipSpin 3s linear infinite;
+}
+
+@keyframes vipSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.vip-sparkle {
+    position: absolute;
+    font-size: 12px;
+    animation: sparkle 1.5s ease-in-out infinite;
+}
+
+.sparkle-1 {
+    top: -8px;
+    right: -8px;
+    animation-delay: 0s;
+}
+
+.sparkle-2 {
+    top: -5px;
+    left: -8px;
+    animation-delay: 0.5s;
+}
+
+.sparkle-3 {
+    bottom: -8px;
+    right: 10px;
+    animation-delay: 1s;
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ===== STYLE HUY HIEU ADMIN ===== */
+.admin-badge-container {
+    position: relative;
+    display: inline-block;
+}
+
+.admin-badge {
+    background: linear-gradient(135deg, #dc3545 0%, #8b0000 50%, #4b0000 100%);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
+    border: 3px solid #ffd700;
+    position: relative;
+    overflow: hidden;
+    animation: adminPulse 1.5s ease-in-out infinite alternate;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes adminPulse {
+    from {
+        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
+        transform: scale(1);
+    }
+    to {
+        box-shadow: 0 8px 30px rgba(220, 53, 69, 0.8);
+        transform: scale(1.05);
+    }
+}
+
+.admin-icon {
+    margin-right: 8px;
+    animation: adminShield 2s ease-in-out infinite;
+}
+
+@keyframes adminShield {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.admin-crown {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    animation: crownBounce 2s ease-in-out infinite;
+}
+
+@keyframes crownBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-3px); }
+}
+
+.admin-lightning {
+    position: absolute;
+    font-size: 14px;
+    animation: lightning 1s ease-in-out infinite;
+}
+
+.admin-lightning-1 {
+    top: -8px;
+    right: -10px;
+    animation-delay: 0s;
+}
+
+.admin-lightning-2 {
+    bottom: -8px;
+    left: -10px;
+    animation-delay: 0.5s;
+}
+
+.admin-fire {
+    position: absolute;
+    bottom: -10px;
+    right: -5px;
+    font-size: 12px;
+    animation: fire 1.2s ease-in-out infinite;
+}
+
+@keyframes lightning {
+    0%, 100% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.3); }
+}
+
+@keyframes fire {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ===== STYLE RESPONSIVE CHO NAVBAR ===== */
+@media (max-width: 991px) {
+    .modern-navbar .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .modern-navbar .navbar-collapse {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        margin-top: 10px;
+        padding: 15px;
+        backdrop-filter: blur(10px);
+    }
+
+    .vip-badge, .admin-badge {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+
+    .vip-sparkle, .admin-crown, .admin-lightning, .admin-fire {
+        font-size: 10px;
+    }
+
+    .luxury-card {
+        padding: 10px 16px;
+        gap: 8px;
+    }
+
+    .luxury-card .customer-name {
+        font-size: 0.95rem;
+    }
+
+    .luxury-card .greeting-text,
+    .luxury-card .vip-text,
+    .luxury-card .admin-text,
+    .luxury-card .normal-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* ===== STYLE TRANG DANH SACH TOUR ===== */
+.hero-ivivu {
+    position: relative;
+    width: 100%;
+    min-height: 420px;
+    background: url('/images/bg/anhbia.jpg') center center no-repeat;
+    background-size: cover;
+    border-radius: 0 0 48px 48px;
+    box-shadow: 0 8px 32px rgba(30,144,255,.10);
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 64, 175, 0.25);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-align: center;
+    padding: 80px 0;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Hop tim kiem */
+.ivivu-searchbox {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 24px 16px 16px 16px;
+    box-shadow: 0 12px 40px rgba(30,144,255,.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    display: flex;
+    gap: 16px;
+    align-items: end;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.search-group {
+    flex: 1;
+    min-width: 140px;
+}
+
+.search-group label {
+    display: block;
+    font-weight: 600;
+    color: #1e40af;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.search-group .form-control,
+.search-group .form-select {
+    border-radius: 16px;
+    border: 2px solid #e5e7eb;
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.search-group .form-control:focus,
+.search-group .form-select:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 3px rgba(30,144,255,0.1);
+    outline: none;
+}
+
+.btn-search {
+    background: linear-gradient(135deg, #1e90ff 0%, #4169e1 100%);
+    border: none;
+    color: white;
+    padding: 12px 32px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(30,144,255,0.3);
+}
+
+.btn-search:hover {
+    background: linear-gradient(135deg, #4169e1 0%, #1e40af 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(30,144,255,0.4);
+    color: white;
+}
+
+/* Statistics Section - Thiết kế tinh tế */
+.ivivu-info-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%);
+    backdrop-filter: blur(15px);
+    border-radius: 0 0 32px 32px;
+    margin-top: -32px;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.ivivu-info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    text-align: center;
+    padding: 25px 20px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.ivivu-info-item:hover {
+    transform: translateY(-5px);
+}
+
+.ivivu-info-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, #e2e8f0, transparent);
+}
+
+.ivivu-info-item i {
+    font-size: 3rem;
+    background: linear-gradient(135deg, #1e90ff, #0066cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 2px 4px rgba(30,144,255,0.3));
+}
+
+.ivivu-info-item b {
+    font-size: 1.6rem;
+    color: #1a202c;
+    font-weight: 800;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, #1a202c, #2d3748);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ivivu-info-item small {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    font-weight: 500;
+    max-width: 140px;
+}
+
+/* Carousel tour */
+.tour-carousel {
+    position: relative;
+    overflow: hidden;
+    padding: 0 80px;
+    margin: 0 -80px;
+}
+
+.tour-carousel-container {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.tour-card {
+    border-radius: 22px;
+    box-shadow: 0 4px 24px rgba(30,144,255,.13);
+    background: #fff;
+    margin-bottom: 32px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    overflow: hidden;
+    position: relative;
+    flex: 0 0 calc(33.333% - 20px);
+    margin-right: 20px;
+}
+
+.tour-card:hover {
+    box-shadow: 0 12px 36px rgba(30,144,255,.18);
+    transform: translateY(-6px) scale(1.03);
+}
+
+.tour-img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    border-radius: 22px 22px 0 0;
+    transition: filter 0.2s;
+}
+
+.tour-card:hover .tour-img {
+    filter: brightness(1.1);
+}
+
+.tour-content {
+    padding: 20px;
+}
+
+.tour-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tour-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.tour-duration {
+    color: #6b7280;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tour-price {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #dc2626;
+}
+
+.tour-location {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tour-badges {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.tour-badge {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.tour-badge.last-minute {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.tour-badge.hot {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* Dieu huong carousel */
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.9);
+    border: 2px solid #1e90ff;
+    color: #1e90ff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 4px 16px rgba(30,144,255,0.2);
+}
+
+.carousel-prev {
+    left: 15px;
+}
+
+.carousel-next {
+    right: 15px;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+    background: #1e90ff;
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 8px 24px rgba(30,144,255,0.4);
+}
+
+/* Tieu de cac phan */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+}
+
+/* ===== STYLE TRANG CHI TIET TOUR ===== */
+/* Phan hero */
+.tour-hero-section {
+    position: relative;
+    margin-top: -20px;
+}
+
+.hero-background {
+    height: 60vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+    display: flex;
+    align-items: center;
+}
+
+.min-vh-50 {
+    min-height: 50vh;
+}
+
+.hero-content {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.hero-info .info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.hero-info .info-item i {
+    font-size: 1.3rem;
+}
+
+.hero-price {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: inline-block;
+}
+
+.price-label {
+    font-size: 1rem;
+    opacity: 0.9;
+    display: block;
+}
+
+.price-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffd700;
+    display: block;
+    line-height: 1;
+}
+
+.price-unit {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Dieu huong tab */
+.tour-tabs-container {
+    background: white;
+    border-radius: 15px;
+    padding: 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid #e9ecef;
+    overflow: hidden;
+}
+
+.tour-nav-tabs {
+    background: #f8f9fa;
+    padding: 1rem 1rem 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.tour-nav-tabs .nav-link {
+    background: transparent;
+    border: none;
+    color: #6c757d;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px 10px 0 0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tour-nav-tabs .nav-link:hover {
+    background: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+}
+
+.tour-nav-tabs .nav-link.active {
+    background: white;
+    color: #2196F3;
+    border-bottom: 2px solid #2196F3;
+    font-weight: 600;
+}
+
+.tour-tab-content {
+    padding: 2rem;
+}
+
+.content-section {
+    margin-bottom: 2.5rem;
+}
+
+.content-title {
+    color: #2196F3;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.description-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #495057;
+}
+
+/* Luoi thong tin nhanh */
+.quick-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.quick-info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.quick-info-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.info-details h6 {
+    margin: 0;
+    font-weight: 600;
+    color: #495057;
+}
+
+.info-details p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+/* Lich khoi hanh */
+.departure-schedule {
+    margin-top: 1rem;
+}
+
+.schedule-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.schedule-item:hover {
+    border-color: #2196F3;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.1);
+}
+
+.schedule-item.last-minute {
+    border-color: #dc3545;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+}
+
+.schedule-item.past {
+    opacity: 0.6;
+    background: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+.schedule-item.full {
+    opacity: 0.7;
+    background: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+.schedule-date {
+    text-align: center;
+    min-width: 80px;
+    padding: 1rem;
+    background: #2196F3;
+    color: white;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.schedule-item.last-minute .schedule-date {
+    background: #dc3545;
+}
+
+.schedule-item.past .schedule-date {
+    background: #6c757d;
+}
+
+.schedule-date .day {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.schedule-date .month {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.schedule-date .year {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+.schedule-info {
+    flex: 1;
+}
+
+.schedule-info h6 {
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+    color: #495057;
+}
+
+.schedule-action {
+    flex-shrink: 0;
+}
+
+/* Dong thoi gian lich trinh */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 25px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #2196F3, #4CAF50, #FF9800);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -2rem;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.timeline-content {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #2196F3;
+}
+
+.timeline-content h6 {
+    color: #2196F3;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Thu vien anh */
+.tour-gallery {
+    margin-top: 1rem;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.gallery-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(33, 150, 243, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-overlay i {
+    color: white;
+    font-size: 2rem;
+}
+
+/* Danh gia */
+.reviews-summary {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.rating-score .score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2196F3;
+    display: block;
+}
+
+.rating-score .stars {
+    margin: 0.5rem 0;
+}
+
+.rating-score .stars i {
+    font-size: 1.5rem;
+    margin: 0 2px;
+}
+
+.review-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    border: 1px solid #e9ecef;
+}
+
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.reviewer-avatar i {
+    font-size: 2.5rem;
+    color: #6c757d;
+}
+
+.reviewer-details h6 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.review-rating {
+    margin-top: 0.25rem;
+}
+
+.review-text {
+    color: #495057;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Luoi chi tiet tour */
+.tour-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #2196F3;
+}
+
+.detail-icon {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.detail-icon i {
+    font-size: 1.5rem;
+}
+
+.detail-content h6 {
+    margin-bottom: 0.5rem;
+    color: #495057;
+    font-weight: 600;
+}
+
+.detail-content p {
+    margin: 0;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* The dat tour */
+.booking-card {
+    background: white;
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border: 2px solid #2196F3;
+    top: 2rem;
+    overflow: hidden;
+}
+
+/* Header voi gia */
+.booking-header {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    position: relative;
+}
+
+.price-display {
+    margin-bottom: 1rem;
+}
+
+.price-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    display: block;
+    line-height: 1;
+}
+
+.price-unit {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.urgency-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.urgency-badge .badge {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+}
+
+/* Thong tin chi tiet */
+.booking-details {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.detail-info {
+    flex: 1;
+}
+
+.detail-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+}
+
+.detail-value {
+    display: block;
+    font-weight: 600;
+    color: #495057;
+}
+
+/* Cac hanh dong */
+.booking-actions {
+    padding: 1.5rem;
+}
+
+.status-message {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.status-message.expired {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.status-message.full {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.booking-btn {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.booking-btn:hover {
+    background: linear-gradient(135deg, #1976D2, #1565C0);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+}
+
+.secondary-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+/* Ho tro */
+.booking-support {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.support-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #495057;
+}
+
+.support-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.support-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6c757d;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.support-item:hover {
+    background: white;
+    color: #2196F3;
+    text-decoration: none;
+}
+
+/* Huy hieu tin cay */
+.trust-badges {
+    padding: 1rem 1.5rem;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+.badge-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6c757d;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+/* Noi dung ghi chu */
+.notes-content {
+    padding: 2rem;
+}
+
+.note-section {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-left: 4px solid #2196F3;
+}
+
+.note-section h5 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.note-content {
+    line-height: 1.6;
+}
+
+.note-item {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    line-height: 1.6;
+}
+
+.note-item strong {
+    color: #2196F3;
+    font-weight: 600;
+}
+
+.note-section.mb-4:nth-child(3) {
+    border-left-color: #dc3545;
+}
+
+.note-section.mb-4:nth-child(3) h5 {
+    color: #dc3545;
+}
+
+.note-section.mb-4:nth-child(4) {
+    border-left-color: #ffc107;
+}
+
+.note-section.mb-4:nth-child(4) h5 {
+    color: #856404;
+}
+
+.note-section.mb-4:nth-child(5) {
+    border-left-color: #fd7e14;
+}
+
+.note-section.mb-4:nth-child(5) h5 {
+    color: #fd7e14;
+}
+
+/* Tour lien quan */
+.related-tours-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 4rem 0;
+    margin-top: 3rem;
+}
+
+.section-header {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: #6c757d;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.related-tours-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.related-tour-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.related-tour-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    text-decoration: none;
+    color: inherit;
+}
+
+.related-tour-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.related-tour-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(33, 150, 243, 0.1), rgba(76, 175, 80, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.related-tour-card:hover .related-tour-image::before {
+    opacity: 1;
+}
+
+.related-tour-content {
+    padding: 1.5rem;
+}
+
+.related-tour-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.related-tour-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.related-tour-duration {
+    color: #6c757d;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.related-tour-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #e74c3c;
+}
+
+.related-tour-location {
+    color: #6c757d;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.related-tour-features {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.related-tour-badge {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* ===== STYLE TRANG THANH TOAN ===== */
+.tour-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.info-item {
+    padding: 0.25rem 0;
+}
+
+.passenger-input {
+    max-width: 100px;
+    display: inline-block;
+}
+
+.count-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sticky-top {
+    top: 20px;
+}
+
+/* Style phuong thuc thanh toan */
+.payment-option {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.payment-option:hover {
+    border-color: #007bff;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.1);
+}
+
+.payment-card {
+    padding: 15px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.payment-card .form-check-input:checked ~ .form-check-label {
+    color: #007bff;
+    font-weight: 600;
+}
+
+/* Style ma QR */
+.qr-container {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.qr-code {
+    max-width: 200px;
+    height: auto;
+    border: 3px solid #007bff;
+    border-radius: 10px;
+    padding: 10px;
+    background: white;
+}
+
+.bank-info {
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+.bank-info strong {
+    color: #007bff;
+}
+
+/* ===== STYLE TRANG QUAN LY BOOKING ===== */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+.tour-details {
+    font-size: 0.9rem;
+}
+
+.payment-info {
+    font-size: 0.9rem;
+}
+
+.booking-date {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 10px;
+}
+
+/* ===== STYLE LAYOUT ADMIN ===== */
+/* Navbar admin */
+.admin-navbar {
+    background-color: #212121;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.admin-navbar .navbar-brand {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 900;
+    font-size: 1.7rem;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+/* Tieu de trang */
+.page-title {
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+    color: white;
+    padding: 40px 0;
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(33, 150, 243, 0.3);
+}
+
+.page-title h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.page-title .bi {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Hop admin */
+.admin-box, .admin-table-box, .form-tour-legend {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    padding: 32px;
+    margin-top: 30px;
+    border: 1px solid #ddd;
+}
+
+/* Cac control form */
+.form-control, .form-select, textarea {
+    border-radius: 12px;
+    background: #fafafa;
+    border: 1.5px solid #e0e0e0;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus, .form-select:focus, textarea:focus {
+    border-color: #1976d2;
+    box-shadow: 0 0 10px rgba(25, 118, 210, 0.2);
+}
+
+label {
+    font-weight: 600;
+    color: #444;
+}
+
+/* Bang hien dai */
+.table-modern {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.table-modern thead {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: #ffffff;
+}
+
+.table-modern thead th {
+    border: none;
+    padding: 20px 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.table-modern tbody tr {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.table-modern tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.01);
+}
+
+.table-modern tbody td {
+    padding: 18px 15px;
+    vertical-align: middle;
+    border: none;
+    font-size: 0.95rem;
+}
+
+/* Nhom nut bam */
+.btn-group-modern {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-group-modern .btn {
+    border-radius: 20px !important;
+    padding: 10px 18px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    min-width: 80px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-group-modern .btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Mau nut bam */
+.btn-warning {
+    background: linear-gradient(135deg, #FF9800, #F57C00) !important;
+    border-color: #FF9800 !important;
+    color: #ffffff !important;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #F44336, #D32F2F) !important;
+    border-color: #F44336 !important;
+    color: #ffffff !important;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #4CAF50, #388E3C) !important;
+    border-color: #4CAF50 !important;
+    color: #ffffff !important;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #2196F3, #1976D2) !important;
+    border-color: #2196F3 !important;
+    color: #ffffff !important;
+}
+
+/* Container form hien dai */
+.form-container-modern {
+    background: #ffffff;
+    border: 2px solid #2196F3;
+    border-radius: 25px;
+    padding: 40px;
+    margin: 20px 0;
+    box-shadow: 0 15px 35px rgba(33, 150, 243, 0.15);
+}
+
+.form-control-modern {
+    border-radius: 15px !important;
+    border: 2px solid #2196F3 !important;
+    padding: 12px 20px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control-modern:focus {
+    border-color: #1976D2 !important;
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.3) !important;
+    transform: scale(1.02);
+}
+
+/* ===== STYLE MODAL DANG NHAP ===== */
+/* Hieu ung tieu de modal */
+.modal-title {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 900;
+    font-size: 2.6rem;
+    text-align: center;
+    margin: 0 auto 1.2rem auto;
+    background: linear-gradient(270deg, #FFD700, #FF4500, #00BFFF, #FFD700);
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbowMove 6s ease infinite, pulse 2s ease-in-out infinite;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes rainbowMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Cac control form trong modal */
+.form-control.rounded-pill {
+    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.15);
+    transition: box-shadow 0.3s ease;
+}
+
+.form-control.rounded-pill:focus {
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.6);
+    border-color: #0056b3;
+    outline: none;
+}
+
+/* Nut bam trong modal */
+.btn.rounded-pill {
+    font-weight: 700;
+    font-size: 1.15rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn.rounded-pill:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 123, 255, 0.4);
+}
+
+/* ===== STYLE RESPONSIVE ===== */
+/* Responsive mobile cho trang danh sach tour */
+@media (max-width: 991px) {
+    .tour-carousel {
+        padding: 0 60px;
+        margin: 0 -60px;
+    }
+
+    .carousel-prev {
+        left: 5px;
+    }
+
+    .carousel-next {
+        right: 5px;
+    }
+
+    .ivivu-searchbox {
+        width: 95%;
+        padding: 18px 8px 12px 8px;
+    }
+
+    .search-group {
+        min-width: 120px;
+    }
+
+    .ivivu-info-row {
+        flex-direction: column;
+        padding: 18px 8px;
+        gap: 15px;
+    }
+
+    .ivivu-info-item {
+        flex-direction: column;
+        gap: 8px;
+        padding: 15px;
+        background: rgba(255,255,255,0.8);
+        border-radius: 12px;
+        margin-bottom: 10px;
+    }
+
+    .ivivu-info-item i {
+        font-size: 2rem;
+        margin-bottom: 5px;
+    }
+
+    .tour-img {
+        height: 160px;
+    }
+
+    .tour-card {
+        flex: 0 0 calc(50% - 15px);
+        margin-right: 15px;
+    }
+}
+
+@media (max-width: 575px) {
+    .tour-carousel {
+        padding: 0 40px;
+        margin: 0 -40px;
+    }
+
+    .carousel-prev {
+        left: 0px;
+    }
+
+    .carousel-next {
+        right: 0px;
+    }
+
+    .ivivu-searchbox {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 4px;
+    }
+
+    .search-group {
+        width: 100%;
+    }
+
+    .hero-ivivu {
+        min-height: 260px;
+        border-radius: 0 0 24px 24px;
+    }
+
+    .ivivu-info-row {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 8px;
+        margin-top: -15px;
+    }
+
+    .ivivu-info-item {
+        flex-direction: row;
+        justify-content: flex-start;
+        text-align: left;
+        padding: 12px;
+        background: rgba(255,255,255,0.95);
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .ivivu-info-item i {
+        font-size: 1.8rem;
+        margin-bottom: 0;
+        margin-right: 10px;
+    }
+
+    .tour-card {
+        border-radius: 14px;
+        flex: 0 0 calc(100% - 10px);
+        margin-right: 10px;
+    }
+
+    .tour-img {
+        border-radius: 14px 14px 0 0;
+    }
+}
+
+/* Responsive mobile cho trang chi tiet tour */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-info {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .price-value {
+        font-size: 2rem;
+    }
+
+    .tour-nav-tabs {
+        padding: 0.5rem;
+    }
+
+    .tour-nav-tabs .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .tour-tab-content {
+        padding: 1.5rem;
+    }
+
+    .quick-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-card {
+        margin-top: 2rem;
+        position: static !important;
+    }
+
+    .secondary-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .trust-badges {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .gallery-image {
+        height: 150px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-background {
+        height: 50vh;
+    }
+
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .tour-nav-tabs .nav-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .tour-tab-content {
+        padding: 1rem;
+    }
+
+    .price-amount {
+        font-size: 2rem;
+    }
+
+    .booking-details {
+        padding: 1rem;
+    }
+
+    .booking-actions {
+        padding: 1rem;
+    }
+
+    .booking-support {
+        padding: 1rem;
+    }
+}
+
+/* Responsive mobile cho admin */
+@media (max-width: 991px) {
+    .table-modern tbody tr {
+        height: 70px;
+    }
+
+    .page-title h2 {
+        font-size: 1.5rem;
+    }
+
+    .page-title .bi {
+        font-size: 2rem;
+    }
+
+    .form-container-modern {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .form-control-modern {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .preview-image {
+        width: 80px;
+        height: 60px;
+    }
+}
+
+/* ===== KET THUC TAT CA STYLE ===== */

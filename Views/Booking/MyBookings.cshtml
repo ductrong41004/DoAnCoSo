@@ -1,0 +1,459 @@
+@model List<TourDuLich.Models.Booking>
+@{
+    ViewData["Title"] = "Tour Đã Đặt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="container my-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>
+                    <i class="bi bi-suitcase-lg text-primary me-2"></i>
+                    Tour Đã Đặt
+                </h2>
+                <a href="@Url.Action("Index", "Tours")" class="btn btn-outline-primary">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Đặt tour mới
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <!-- Chưa có booking -->
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox display-1 text-muted"></i>
+                    <h4 class="text-muted mt-3">Chưa có tour nào được đặt</h4>
+                    <p class="text-muted">Hãy khám phá và đặt tour du lịch yêu thích của bạn!</p>
+                    <a href="@Url.Action("Index", "Tours")" class="btn btn-primary btn-lg mt-3">
+                        <i class="bi bi-search me-2"></i>
+                        Tìm tour ngay
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Danh sách booking -->
+        <div class="row">
+            @foreach (var booking in Model)
+            {
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <!-- Header với status -->
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">
+                                <i class="bi bi-receipt me-2"></i>
+                                Đơn hàng #@booking.BookingId
+                            </h6>
+                            <span class="badge @GetStatusBadgeClass(booking.Status) fs-6">
+                                @GetStatusText(booking.Status)
+                            </span>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Thông tin tour -->
+                            <div class="tour-info mb-3">
+                                <h5 class="card-title text-primary">
+                                    <i class="bi bi-geo-alt me-2"></i>
+                                    @booking.Tour?.TourName
+                                </h5>
+                                <div class="tour-details">
+                                    <div class="row text-sm">
+                                        <div class="col-6">
+                                            <strong>📅 Khởi hành:</strong><br>
+                                            <span>@booking.DepartureDate.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <strong>👥 Số khách:</strong><br>
+                                            <span>@(booking.AdultCount + booking.ChildCount + booking.InfantCount + booking.BabyCount) người</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Thông tin thanh toán -->
+                            <div class="payment-info mb-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>💰 Tổng tiền:</strong><br>
+                                        <span class="text-danger fw-bold">@booking.TotalPrice.ToString("N0") đ</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>💳 Thanh toán:</strong><br>
+                                        <span class="badge @GetPaymentStatusBadgeClass(booking.PaymentStatus)">
+                                            @GetPaymentStatusText(booking.PaymentStatus)
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ngày đặt -->
+                            <div class="booking-date">
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar-check me-1"></i>
+                                    Đặt ngày: @booking.BookingDate.ToString("dd/MM/yyyy HH:mm")
+                                </small>
+                            </div>
+                        </div>
+
+                        <!-- Footer với actions -->
+                        <div class="card-footer bg-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    @if (booking.PaymentStatus == "Pending")
+                                    {
+                                        <span class="text-warning small">
+                                            <i class="bi bi-clock me-1"></i>
+                                            Chờ thanh toán
+                                        </span>
+                                    }
+                                    else if (booking.PaymentStatus == "Paid")
+                                    {
+                                        <span class="text-success small">
+                                            <i class="bi bi-check-circle me-1"></i>
+                                            Đã thanh toán
+                                        </span>
+                                    }
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-primary" onclick="viewBookingDetails(@booking.BookingId)">
+                                        <i class="bi bi-eye me-1"></i>
+                                        Chi tiết
+                                    </button>
+                                    @if (booking.Status == "Pending" && booking.PaymentStatus == "Pending")
+                                    {
+                                        <button class="btn btn-sm btn-outline-danger ms-2" onclick="cancelBooking(@booking.BookingId)">
+                                            <i class="bi bi-x-circle me-1"></i>
+                                            Hủy
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Pagination nếu cần -->
+        @if (Model.Count > 6)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="Booking pagination">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <span class="page-link">Trước</span>
+                            </li>
+                            <li class="page-item active">
+                                <span class="page-link">1</span>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Sau</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<!-- Modal Chi Tiết Đơn Hàng -->
+<div class="modal fade" id="bookingDetailsModal" tabindex="-1" aria-labelledby="bookingDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="bookingDetailsModalLabel">
+                    <i class="bi bi-receipt me-2"></i>Chi Tiết Đơn Hàng
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="bookingDetailsContent">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Pending" => "bg-warning text-dark",
+            "Confirmed" => "bg-success",
+            "Cancelled" => "bg-danger",
+            "Completed" => "bg-primary",
+            _ => "bg-secondary"
+        };
+    }
+
+    string GetStatusText(string status)
+    {
+        return status switch
+        {
+            "Pending" => "Chờ xác nhận",
+            "Confirmed" => "Đã xác nhận",
+            "Cancelled" => "Đã hủy",
+            "Completed" => "Hoàn thành",
+            _ => "Không xác định"
+        };
+    }
+
+    string GetPaymentStatusBadgeClass(string paymentStatus)
+    {
+        return paymentStatus switch
+        {
+            "Pending" => "bg-warning text-dark",
+            "Paid" => "bg-success",
+            "Failed" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+    string GetPaymentStatusText(string paymentStatus)
+    {
+        return paymentStatus switch
+        {
+            "Pending" => "Chờ thanh toán",
+            "Paid" => "Đã thanh toán",
+            "Failed" => "Thất bại",
+            _ => "Không xác định"
+        };
+    }
+}
+
+<style>
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    }
+    
+    .tour-details {
+        font-size: 0.9rem;
+    }
+    
+    .payment-info {
+        font-size: 0.9rem;
+    }
+    
+    .booking-date {
+        border-top: 1px solid #f0f0f0;
+        padding-top: 10px;
+    }
+</style>
+
+@section Scripts {
+<script>
+$(document).ready(function() {
+    // Đảm bảo jQuery đã load
+    console.log('MyBookings jQuery loaded:', typeof $ !== 'undefined');
+    console.log('Bootstrap modal available:', typeof $.fn.modal !== 'undefined');
+});
+
+// Xem chi tiết đơn hàng
+function viewBookingDetails(bookingId) {
+    console.log('viewBookingDetails called with bookingId:', bookingId);
+
+    // Kiểm tra jQuery và modal
+    if (typeof $ === 'undefined') {
+        alert('jQuery chưa được load!');
+        return;
+    }
+
+    if (typeof $.fn.modal === 'undefined') {
+        alert('Bootstrap modal chưa được load!');
+        return;
+    }
+
+    // Hiển thị modal
+    $('#bookingDetailsModal').modal('show');
+
+    // Load chi tiết qua AJAX
+    console.log('Making AJAX request to /Booking/GetBookingDetails');
+    $.get('/Booking/GetBookingDetails', { bookingId: bookingId })
+        .done(function(response) {
+            console.log('AJAX response received:', response);
+            if (response.success) {
+                const data = response.data;
+                $('#bookingDetailsContent').html(`
+                    <div class="row">
+                        <!-- Thông tin đơn hàng -->
+                        <div class="col-12 mb-4">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="mb-0"><i class="bi bi-receipt me-2"></i>Thông Tin Đơn Hàng</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>📋 Mã đơn hàng:</strong> #${data.bookingId}</p>
+                                            <p><strong>📅 Ngày đặt:</strong> ${new Date(data.bookingDate).toLocaleDateString('vi-VN')}</p>
+                                            <p><strong>🚀 Ngày khởi hành:</strong> ${data.departureDate}</p>
+                                            <p><strong>📍 Khởi hành từ:</strong> TP. Hồ Chí Minh</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>📊 Trạng thái:</strong> <span class="badge bg-info">${data.status}</span></p>
+                                            <p><strong>💳 Thanh toán:</strong> <span class="badge bg-warning">${data.paymentStatus}</span></p>
+                                            <p><strong>💰 Tổng tiền:</strong> <span class="text-danger fw-bold">${parseFloat(data.totalPrice).toLocaleString('vi-VN')} đ</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Thông tin tour -->
+                        <div class="col-12 mb-4">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h6 class="mb-0"><i class="bi bi-geo-alt me-2"></i>Thông Tin Tour</h6>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="text-primary">${data.tourName}</h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>👥 Người lớn:</strong> ${data.adultCount} người</p>
+                                            <p><strong>👶 Trẻ em:</strong> ${data.childCount} người</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>🍼 Em bé:</strong> ${data.infantCount} người</p>
+                                            <p><strong>👶 Sơ sinh:</strong> ${data.babyCount} người</p>
+                                        </div>
+                                    </div>
+                                    ${data.singleRoomCount > 0 ? `<p><strong>🏨 Phòng đơn:</strong> ${data.singleRoomCount} phòng</p>` : ''}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Thông tin khách hàng -->
+                        <div class="col-12 mb-4">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0"><i class="bi bi-person me-2"></i>Thông Tin Khách Hàng</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>👤 Họ tên:</strong> ${data.customerName}</p>
+                                            <p><strong>📧 Email:</strong> ${data.customerEmail}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>📞 Điện thoại:</strong> ${data.customerPhone}</p>
+                                            <p><strong>🏠 Địa chỉ:</strong> ${data.customerAddress || 'Chưa cập nhật'}</p>
+                                        </div>
+                                    </div>
+                                    ${data.notes ? `<p><strong>💬 Ghi chú:</strong> ${data.notes}</p>` : ''}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Thông tin thanh toán -->
+                        <div class="col-12">
+                            <div class="card border-warning">
+                                <div class="card-header bg-warning text-dark">
+                                    <h6 class="mb-0"><i class="bi bi-credit-card me-2"></i>Thông Tin Thanh Toán</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>💳 Phương thức:</strong> ${data.paymentMethod === 'BankTransfer' ? 'Chuyển khoản' : 'Tiền mặt'}</p>
+                                            <p><strong>📊 Trạng thái:</strong> <span class="badge ${data.paymentStatus === 'Paid' ? 'bg-success' : 'bg-warning'}">${data.paymentStatus === 'Paid' ? 'Đã thanh toán' : 'Chờ thanh toán'}</span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>💰 Tổng tiền:</strong> <span class="text-danger fw-bold fs-5">${parseFloat(data.totalPrice).toLocaleString('vi-VN')} đ</span></p>
+                                        </div>
+                                    </div>
+                                    ${data.paymentStatus === 'Pending' && data.paymentMethod === 'BankTransfer' ? `
+                                        <div class="alert alert-info mt-3">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h6><i class="bi bi-credit-card me-2"></i>Thông tin chuyển khoản:</h6>
+                                                    <p class="mb-1"><strong>🏦 Ngân hàng:</strong><br>MB BANK</p>
+                                                    <p class="mb-1"><strong>💳 Số tài khoản:</strong><br>0010180808888</p>
+                                                    <p class="mb-1"><strong>👤 Chủ tài khoản:</strong><br>CÔNG TY TNHH ĐỨC TRỌNG PQ</p>
+                                                    <p class="mb-1"><strong>💰 Số tiền:</strong><br>${parseFloat(data.totalPrice).toLocaleString('vi-VN')} đ</p>
+                                                    <p class="mb-0"><strong>📝 Nội dung:</strong><br>Donhang#${data.bookingId} ${data.customerEmail} ${data.customerPhone}</p>
+                                                </div>
+                                                <div class="col-md-4 text-center">
+                                                    <div class="border rounded p-2 bg-white">
+                                                        <img src="https://img.vietqr.io/image/970422-0010180808888-compact2.jpg?amount=${data.totalPrice}&addInfo=Donhang%23${data.bookingId}%20${encodeURIComponent(data.customerEmail)}%20${data.customerPhone}&accountName=CONG%20TY%20TNHH%20DUC%20TRONG%20PQ"
+                                                             alt="VietQR Code"
+                                                             class="img-fluid"
+                                                             style="max-width: 150px;">
+                                                        <small class="d-block text-muted mt-1">Quét mã QR để thanh toán</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            } else {
+                $('#bookingDetailsContent').html(`
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        ${response.message || 'Không thể tải thông tin đơn hàng!'}
+                    </div>
+                `);
+            }
+        })
+        .fail(function(xhr, status, error) {
+            console.error('AJAX request failed:', xhr, status, error);
+            $('#bookingDetailsContent').html(`
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    Có lỗi xảy ra khi tải thông tin. Vui lòng thử lại!<br>
+                    <small>Error: ${error}</small>
+                </div>
+            `);
+        });
+}
+
+// Hủy đơn hàng
+function cancelBooking(bookingId) {
+    if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này?\n\nLưu ý: Đơn hàng đã hủy không thể khôi phục!')) {
+        $.post('/Booking/CancelBooking', {
+            bookingId: bookingId,
+            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+        })
+        .done(function(response) {
+            if (response.success) {
+                alert('✅ ' + response.message);
+                location.reload();
+            } else {
+                alert('❌ ' + response.message);
+            }
+        })
+        .fail(function() {
+            alert('❌ Có lỗi xảy ra. Vui lòng thử lại!');
+        });
+    }
+}
+</script>
+}

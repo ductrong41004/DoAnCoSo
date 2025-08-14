@@ -1,0 +1,163 @@
+﻿@model IEnumerable<TourDuLich.Models.Tour>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Danh sách Tour";
+}
+
+<div class="container mt-4">
+    @{
+        var currentUserType = ViewBag.CurrentUserType as int?;
+    }
+
+    @if (currentUserType != 2)
+    {
+        <!-- ❌ KHÔNG CÓ QUYỀN - CHỈ ADMIN -->
+        <div class="alert alert-danger text-center" style="border-radius: 20px; border: 2px solid #dc3545; box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);">
+            <div class="py-5">
+                <i class="bi bi-shield-exclamation display-1 text-danger mb-3"></i>
+                <h2 class="text-danger fw-bold">🚫 TRUY CẬP BỊ TỪ CHỐI</h2>
+                <p class="lead mb-4">Bạn không có quyền truy cập vào trang quản lý Tour!</p>
+                <p class="text-muted">Chỉ có <strong>Quản trị viên (Admin)</strong> mới được phép truy cập trang này.</p>
+                <div class="mt-4">
+                    <a href="@Url.Action("Index", "Tours")" class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-house-door me-2"></i> Về trang chủ
+                    </a>
+                    <a href="javascript:history.back()" class="btn btn-secondary btn-lg px-5 ms-3">
+                        <i class="bi bi-arrow-left me-2"></i> Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- ✅ CÓ QUYỀN - CHỈ ADMIN -->
+        <!-- Tiêu đề trang nổi bật -->
+        <div class="page-title">
+            <h2><i class="bi bi-map"></i> Danh sách Tour Du Lịch</h2>
+        </div>
+
+        <!-- Nút thêm mới -->
+        <div class="mb-4">
+            <a class="btn btn-success fw-bold px-4 py-3" asp-action="Create">
+                <i class="bi bi-plus-circle me-2"></i> Thêm mới Tour
+            </a>
+        </div>
+
+        <!-- Bảng với thiết kế đẹp -->
+        <div class="table-container-modern">
+            <table class="table-modern">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên Tour</th>
+                        <th>Danh mục</th>
+                        <th>Giá</th>
+                        <th>Khởi hành</th>
+                        <th>Địa điểm</th>
+                        <th>Số chỗ</th>
+                        <th>Hành trình</th>
+                        <th>Ảnh</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int stt = 1;
+                    }
+                    @foreach (var tour in Model)
+                    {
+                        <tr>
+                            <td>@stt</td>
+                            <td class="text-start">
+                                <strong>@tour.TourName</strong>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-primary">@tour.GetCategoryDisplayName()</span>
+                            </td>
+                            <td class="price">
+                                @tour.Price.ToString("N0") đ
+                            </td>
+                            <td class="date">
+                                @tour.DepartureDate.ToString("dd/MM/yyyy")
+                            </td>
+                            <td class="text-start">
+                                <i class="bi bi-geo-alt text-primary me-1"></i>
+                                @tour.Location
+                            </td>
+                            <td>
+                                <span class="badge bg-info text-dark fw-bold">
+                                    @tour.GetDepartureDatesWithSeats().Values.Sum() chỗ
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                @if (!string.IsNullOrEmpty(tour.Itinerary))
+                                {
+                                    <a asp-action="ViewItinerary" asp-route-id="@tour.TourId" class="btn btn-outline-success btn-sm">
+                                        <i class="bi bi-map me-1"></i> Xem hành trình
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted small">Chưa có hành trình</span>
+                                    <br>
+                                    <a asp-action="EditItinerary" asp-route-id="@tour.TourId" class="btn btn-outline-warning btn-sm mt-1">
+                                        <i class="bi bi-plus-circle me-1"></i> Thêm hành trình
+                                    </a>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(tour.ImageUrl))
+                                {
+                                    var firstImg = tour.ImageUrl.Split(';').FirstOrDefault();
+                                    if (!string.IsNullOrEmpty(firstImg))
+                                    {
+                                        <img src="@firstImg" alt="@tour.TourName" class="tour-image" />
+                                    }
+                                    else
+                                    {
+                                        <div class="no-image">
+                                            <i class="bi bi-image"></i>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="no-image">
+                                        <i class="bi bi-image"></i>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                <div class="btn-group-modern" role="group">
+                                    <a asp-action="Edit" asp-route-id="@tour.TourId" class="btn btn-warning btn-sm">
+                                        <i class="bi bi-pencil-square me-1"></i> Sửa
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@tour.TourId" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash me-1"></i> Xóa
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@tour.TourId" class="btn btn-info btn-sm">
+                                        <i class="bi bi-eye me-1"></i> Xem
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        stt++;
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                <div class="empty-state">
+                                    <i class="bi bi-inbox display-1 text-muted"></i>
+                                    <h4 class="text-muted mt-3">Chưa có tour nào</h4>
+                                    <p class="text-muted">Hãy thêm tour đầu tiên của bạn!</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

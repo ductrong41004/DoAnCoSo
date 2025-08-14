@@ -1,0 +1,205 @@
+﻿@* Partial View modal đăng nhập / đăng ký *@
+<div class="modal fade" id="loginRegisterModal" tabindex="-1" aria-labelledby="loginRegisterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 shadow p-4">
+            <div class="modal-header border-0 pb-0 justify-content-center">
+                <h5 class="modal-title" id="loginRegisterLabel">IT THÍCH DU LỊCH XIN CHÀO !</h5>
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <div class="modal-body pt-0">
+
+                @if (TempData["RegisterSuccess"] != null)
+                {
+                    <div class="alert alert-success text-center">
+                        <i class="bi bi-check-circle-fill me-2"></i>@TempData["RegisterSuccess"] <span>🎉</span>
+                    </div>
+                }
+                @if (TempData["RegisterError"] != null)
+                {
+                    <div class="alert alert-danger text-center">
+                        @TempData["RegisterError"]
+                    </div>
+                }
+                @if (TempData["LoginError"] != null)
+                {
+                    <div class="alert alert-danger text-center">
+                        @TempData["LoginError"]
+                    </div>
+                }
+                @if (TempData["LoginSuccess"] != null)
+                {
+                    <div class="alert alert-success text-center">
+                        @TempData["LoginSuccess"] <span>👍</span>
+                    </div>
+                }
+
+                <ul class="nav nav-tabs mb-4 justify-content-center" id="authTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active px-4 py-2 rounded-pill" id="login-tab" data-bs-toggle="tab" data-bs-target="#loginTab" type="button" role="tab" aria-controls="loginTab" aria-selected="true">Đăng nhập</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-4 py-2 rounded-pill" id="register-tab" data-bs-toggle="tab" data-bs-target="#registerTab" type="button" role="tab" aria-controls="registerTab" aria-selected="false">Đăng ký</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="authTabContent">
+                    <!-- Đăng nhập -->
+                    <div class="tab-pane fade show active" id="loginTab" role="tabpanel" aria-labelledby="login-tab">
+                        <form method="post" asp-controller="Account" asp-action="Login">
+                            <input type="hidden" name="ReturnUrl" id="loginReturnUrl" value="" />
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control rounded-pill shadow-sm" id="loginEmail" name="Email" placeholder="Nhập email" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label">Mật khẩu</label>
+                                <input type="password" class="form-control rounded-pill shadow-sm" id="loginPassword" name="Password" placeholder="Nhập mật khẩu" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary rounded-pill w-100 fw-semibold py-2 shadow-sm">Đăng nhập</button>
+                        </form>
+                    </div>
+
+                    <!-- Đăng ký -->
+                    <div class="tab-pane fade" id="registerTab" role="tabpanel" aria-labelledby="register-tab">
+                        <form method="post" asp-controller="Account" asp-action="Register">
+                            <input type="hidden" name="ReturnUrl" id="registerReturnUrl" value="" />
+                            <div class="mb-3">
+                                <label for="registerFullName" class="form-label">Họ và tên</label>
+                                <input type="text" class="form-control rounded-pill shadow-sm" id="registerFullName" name="FullName" placeholder="Nhập họ và tên" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control rounded-pill shadow-sm" id="registerEmail" name="Email" placeholder="Nhập email" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerPassword" class="form-label">Mật khẩu</label>
+                                <input type="password" class="form-control rounded-pill shadow-sm" id="registerPassword" name="Password" placeholder="Nhập mật khẩu" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerPhone" class="form-label">Số điện thoại</label>
+                                <input type="text" class="form-control rounded-pill shadow-sm" id="registerPhone" name="Phone" placeholder="Nhập số điện thoại" />
+                            </div>
+                            <button type="submit" class="btn btn-success rounded-pill w-100 fw-semibold py-2 shadow-sm">Đăng ký</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Hiệu ứng gradient chuyển động cho tiêu đề modal */
+    .modal-title {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 900;
+        font-size: 2.6rem;
+        text-align: center;
+        margin: 0 auto 1.2rem auto;
+        background: linear-gradient(270deg, #FFD700, #FF4500, #00BFFF, #FFD700);
+        background-size: 600% 600%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: rainbowMove 6s ease infinite, pulse 2s ease-in-out infinite;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    keyframes rainbowMove {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    -webkit-keyframes rainbowMove {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    keyframes pulse {
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+    }
+
+    /* Bo góc và bóng cho input */
+    .form-control.rounded-pill {
+        box-shadow: 0 3px 8px rgba(0, 123, 255, 0.15);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .form-control.rounded-pill:focus {
+        box-shadow: 0 0 12px rgba(0, 123, 255, 0.6);
+        border-color: #0056b3;
+        outline: none;
+    }
+
+    /* Bo góc và bóng cho button */
+    .btn.rounded-pill {
+        font-weight: 700;
+        font-size: 1.15rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn.rounded-pill:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 6px 18px rgba(0, 123, 255, 0.4);
+    }
+
+    /* Tab active rounded */
+    .nav-tabs .nav-link.active {
+        border-radius: 50px !important;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #fff !important;
+        background: linear-gradient(90deg, #007bff, #00c6ff);
+        box-shadow: 0 4px 16px rgba(0, 123, 255, 0.4);
+        transition: background 0.3s ease;
+    }
+
+    /* Tab inactive hover */
+    .nav-tabs .nav-link {
+        border-radius: 50px !important;
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-tabs .nav-link:hover:not(.active) {
+        background-color: #e0f0ff;
+        color: #007bff !important;
+    }
+</style>
+
+<script>
+    // Set ReturnUrl khi mở modal
+    document.addEventListener('DOMContentLoaded', function() {
+        var loginModal = document.getElementById('loginRegisterModal');
+        if (loginModal) {
+            loginModal.addEventListener('show.bs.modal', function() {
+                // Lấy URL hiện tại và set vào ReturnUrl cho cả login và register
+                var currentUrl = window.location.pathname + window.location.search;
+                document.getElementById('loginReturnUrl').value = currentUrl;
+                document.getElementById('registerReturnUrl').value = currentUrl;
+            });
+        }
+    });
+</script>

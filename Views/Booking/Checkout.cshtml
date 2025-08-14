@@ -1,0 +1,514 @@
+@model TourDuLich.Controllers.BookingCheckoutViewModel
+@{
+    ViewData["Title"] = "Thanh toán Tour - " + Model.Tour.TourName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center mb-4">
+                <i class="bi bi-credit-card text-primary me-2"></i>
+                Thanh Toán Tour
+            </h2>
+        </div>
+    </div>
+
+    <form asp-controller="Booking" asp-action="Process" method="post">
+        <input type="hidden" asp-for="TourId" value="@Model.Tour.TourId" />
+        <input type="hidden" asp-for="SelectedDepartureDate" value="@Model.SelectedDepartureDate.ToString("yyyy-MM-dd")" />
+        <input type="hidden" asp-for="AdultCount" id="hiddenAdultCount" value="1" />
+        <input type="hidden" asp-for="ChildCount" id="hiddenChildCount" value="0" />
+        <input type="hidden" asp-for="InfantCount" id="hiddenInfantCount" value="0" />
+        <input type="hidden" asp-for="BabyCount" id="hiddenBabyCount" value="0" />
+        <input type="hidden" asp-for="SingleRoomCount" id="hiddenSingleRoomCount" value="0" />
+        <input type="hidden" asp-for="SingleRoomSupplement" id="hiddenSingleRoomSupplement" value="false" />
+        
+        <div class="row">
+            <!-- Cột trái - Form thông tin -->
+            <div class="col-lg-8">
+                
+                <!-- 1. THÔNG TIN TOUR -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-info-circle me-2"></i>Thông Tin Tour
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                @if (!string.IsNullOrEmpty(Model.Tour.ImageUrl))
+                                {
+                                    var firstImage = Model.Tour.ImageUrl.Split(';').FirstOrDefault();
+                                    <img src="@firstImage" alt="@Model.Tour.TourName" class="img-fluid rounded">
+                                }
+                            </div>
+                            <div class="col-md-8">
+                                <h5 class="text-primary">@Model.Tour.TourName</h5>
+                                <div class="tour-info-grid">
+                                    <div class="info-item">
+                                        <strong>Mã Tour:</strong> <span class="text-primary">@Model.Tour.TourId</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>Thời gian:</strong> @Model.Tour.Duration
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>Giá:</strong> <span class="text-danger fw-bold text-nowrap">@Model.Tour.Price.ToString("N0")&nbsp;đ</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>Ngày khởi hành:</strong> @(Model.SelectedDepartureDate != DateTime.MinValue ? Model.SelectedDepartureDate.ToString("dd/MM/yyyy") : Model.Tour.DepartureDate.ToString("dd/MM/yyyy"))
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>Nơi khởi hành:</strong> @Model.Tour.DepartureFrom
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>Số chỗ còn:</strong> <span class="text-success" id="availableSeats">@Model.Tour.GetRealAvailableSeatsForDate(Model.SelectedDepartureDate) chỗ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. LƯU Ý -->
+                <div class="alert alert-warning mb-4">
+                    <h6><i class="bi bi-exclamation-triangle me-2"></i>Lưu ý:</h6>
+                    <p class="mb-0 small">
+                        Các khoản phí phát sinh (nếu có) như: phụ thu dành cho khách nước ngoài, việt kiều; phụ thu phòng đơn; phụ thu chênh lệch giá tour… 
+                        Nhân viên <strong>IT THÍCH DU LỊCH</strong> sẽ gọi điện thoại tư vấn cho quý khách ngay sau khi có phiếu xác nhận booking. (Trong giờ hành chính)<br>
+                        <strong>Trường hợp quý khách không đồng ý các khoản phát sinh, phiếu xác nhận booking của quý khách sẽ không có hiệu lực.</strong>
+                    </p>
+                </div>
+
+                <!-- 3. BẢNG GIÁ CHI TIẾT -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-table me-2"></i>Bảng Giá Tour Chi Tiết
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Loại giá\Độ tuổi</th>
+                                        <th>Người lớn<br><small>(Trên 11 tuổi)</small></th>
+                                        <th>Trẻ em<br><small>(5 - 11 tuổi)</small></th>
+                                        <th>Trẻ nhỏ<br><small>(2 - 5 tuổi)</small></th>
+                                        <th>Sơ sinh<br><small>(&lt; 2 tuổi)</small></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Giá</strong></td>
+                                        <td class="text-danger fw-bold text-nowrap">@Model.Tour.Price.ToString("N0")&nbsp;đ</td>
+                                        <td class="text-danger fw-bold text-nowrap">@((Math.Round(Model.Tour.Price * 0.9m / 100000) * 100000).ToString("N0"))&nbsp;đ</td>
+                                        <td class="text-danger fw-bold text-nowrap">@((Math.Round(Model.Tour.Price * 0.47m / 100000) * 100000).ToString("N0"))&nbsp;đ</td>
+                                        <td class="text-danger fw-bold text-nowrap">@((Math.Round(Model.Tour.Price * 0.07m / 100000) * 100000).ToString("N0"))&nbsp;đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phụ thu Nước Ngoài</strong></td>
+                                        <td class="text-warning text-nowrap">590,000&nbsp;đ</td>
+                                        <td class="text-nowrap">0&nbsp;đ</td>
+                                        <td class="text-nowrap">0&nbsp;đ</td>
+                                        <td class="text-nowrap">0&nbsp;đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phụ thu Việt Kiều</strong></td>
+                                        <td class="text-nowrap">0&nbsp;đ</td>
+                                        <td class="text-nowrap">0&nbsp;đ</td>
+                                        <td class="text-nowrap">0&nbsp;đ</td>
+                                        <td class="text-nowrap">0&nbsp;đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phụ thu Phòng đơn</strong></td>
+                                        <td colspan="4" class="text-warning text-nowrap">1,300,000&nbsp;đ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. THÔNG TIN LIÊN HỆ -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-person-lines-fill me-2"></i>Thông Tin Liên Hệ
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FullName" class="form-label">Họ tên <span class="text-danger">*</span></label>
+                                <input asp-for="FullName" id="FullName" class="form-control" value="@Model.User.FullName" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input asp-for="Email" id="Email" type="email" class="form-control" value="@Model.User.Email" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+                                <input asp-for="Phone" id="Phone" class="form-control" value="@Model.User.Phone" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Address" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                                <input asp-for="Address" id="Address" class="form-control" required />
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label asp-for="Notes" class="form-label">Ghi chú</label>
+                                <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Yêu cầu đặc biệt, ghi chú thêm..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Cột phải - Tính toán giá -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm sticky-top">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">
+                            <i class="bi bi-calculator me-2"></i>Tính Toán Giá
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- SỐ LƯỢNG NGƯỜI -->
+                        <div class="passenger-counts mb-4">
+                            <div class="count-item mb-3">
+                                <label class="form-label">Người lớn:</label>
+                                <input asp-for="AdultCount" type="number" min="1" value="1" class="form-control passenger-input" data-price="@Model.Tour.Price" />
+                            </div>
+                            <div class="count-item mb-3">
+                                <label class="form-label">Trẻ em (5-11 tuổi):</label>
+                                <input asp-for="ChildCount" type="number" min="0" value="0" class="form-control passenger-input" data-price="@((Math.Round(Model.Tour.Price * 0.9m / 100000) * 100000))" />
+                            </div>
+                            <div class="count-item mb-3">
+                                <label class="form-label">Trẻ nhỏ (2-5 tuổi):</label>
+                                <input asp-for="InfantCount" type="number" min="0" value="0" class="form-control passenger-input" data-price="@((Math.Round(Model.Tour.Price * 0.47m / 100000) * 100000))" />
+                            </div>
+                            <div class="count-item mb-3">
+                                <label class="form-label">Sơ sinh (nhỏ hơn 2 tuổi):</label>
+                                <input asp-for="BabyCount" type="number" min="0" value="0" class="form-control passenger-input" data-price="@((Math.Round(Model.Tour.Price * 0.07m / 100000) * 100000))" />
+                            </div>
+                        </div>
+
+                        <!-- PHỤ THU PHÒNG ĐƠN -->
+                        <div class="room-supplement mb-4">
+                            <h6>Phụ thu phòng đơn:</h6>
+                            <div class="form-check">
+                                <input name="SingleRoomSupplement" class="form-check-input" type="radio" value="false" checked id="singleRoomNo" />
+                                <label class="form-check-label" for="singleRoomNo">Không</label>
+                            </div>
+                            <div class="form-check">
+                                <input name="SingleRoomSupplement" class="form-check-input" type="radio" value="true" id="singleRoomYes" />
+                                <label class="form-check-label" for="singleRoomYes">Có</label>
+                            </div>
+                            <div class="mt-2">
+                                <label class="form-label">Số lượng phòng đơn:</label>
+                                <input asp-for="SingleRoomCount" type="number" min="0" value="0" class="form-control" disabled />
+                            </div>
+                        </div>
+
+                        <!-- TỔNG GIÁ TRỊ -->
+                        <div class="total-price mb-4">
+                            <h4 class="text-center">
+                                <span class="badge bg-danger fs-5 p-3 w-100">
+                                    Tổng giá trị: <span id="totalAmount">@Model.Tour.Price.ToString("N0")</span>&nbsp;đ
+                                </span>
+                            </h4>
+                        </div>
+
+                        <!-- PHƯƠNG THỨC THANH TOÁN -->
+                        <div class="payment-methods mb-4">
+                            <h6 class="mb-3">
+                                <i class="bi bi-credit-card text-primary me-2"></i>Phương thức thanh toán:
+                            </h6>
+
+                            <!-- Chuyển khoản ngân hàng -->
+                            <div class="form-check mb-3">
+                                <input asp-for="PaymentMethod" class="form-check-input" type="radio" value="BankTransfer" id="bankTransfer" checked />
+                                <label class="form-check-label" for="bankTransfer">
+                                    <i class="bi bi-bank text-primary me-2"></i>
+                                    <strong>Thanh toán chuyển khoản ngân hàng</strong>
+                                    <div class="text-muted small">Chuyển khoản qua ATM, Internet Banking hoặc Mobile Banking</div>
+                                </label>
+                            </div>
+
+                            <!-- Thanh toán tiền điện tử -->
+                            <div class="form-check">
+                                <input asp-for="PaymentMethod" class="form-check-input" type="radio" value="Crypto" id="crypto" />
+                                <label class="form-check-label" for="crypto">
+                                    <i class="bi bi-currency-bitcoin text-warning me-2"></i>
+                                    <strong>Thanh toán tiền điện tử</strong>
+                                    <div class="text-muted small">Hỗ trợ USDT (TRC20), Bitcoin (BTC) - Sẽ cập nhật sau</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- NÚT THANH TOÁN -->
+                        <div class="text-center">
+                            <p class="small text-muted mb-3">
+                                Khi nhấn 'Thanh Toán', bạn đồng ý với Điều khoản & Chính sách đã nêu ở trên.
+                            </p>
+                            <button type="submit" class="btn btn-success btn-lg w-100" id="paymentButton" onclick="handlePaymentSubmit(event)">
+                                <i class="bi bi-credit-card me-2"></i>
+                                <span id="paymentButtonText">Thanh Toán</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    .tour-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+    
+    .info-item {
+        padding: 0.25rem 0;
+    }
+    
+    .passenger-input {
+        max-width: 100px;
+        display: inline-block;
+    }
+    
+    .count-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .sticky-top {
+        top: 20px;
+    }
+
+    /* Smooth scroll behavior */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Payment Methods Styling */
+    .payment-option {
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .payment-option:hover {
+        border-color: #007bff;
+        box-shadow: 0 2px 8px rgba(0,123,255,0.1);
+    }
+
+    .payment-card {
+        padding: 15px;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .payment-card .form-check-input:checked ~ .form-check-label {
+        color: #007bff;
+        font-weight: 600;
+    }
+
+    .payment-option:has(.form-check-input:checked) {
+        border-color: #007bff;
+        background-color: #f8f9ff;
+    }
+
+    .payment-details {
+        padding: 0 15px 15px 15px;
+        animation: slideDown 0.3s ease;
+    }
+
+    keyframes slideDown {
+        from {
+            opacity: 0;
+            max-height: 0;
+        }
+        to {
+            opacity: 1;
+            max-height: 300px;
+        }
+    }
+
+    .payment-details code {
+        background-color: #f8f9fa;
+        padding: 5px 8px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        word-break: break-all;
+    }
+
+    /* QR Code Styling */
+    #qrCodeContainer {
+        border: 2px dashed #dee2e6;
+        min-height: 280px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    #qrCodeContainer:hover {
+        border-color: #007bff;
+        background-color: #f8f9ff;
+    }
+
+    #qrCodeImage {
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease;
+    }
+
+    #qrCodeImage:hover {
+        transform: scale(1.05);
+    }
+
+    #qrCodeLoading {
+        font-size: 1.1rem;
+        color: #6c757d;
+    }
+
+    #transferAmount {
+        font-size: 1.2rem;
+    }
+
+    #transferContent {
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        background-color: #e3f2fd;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passengerInputs = document.querySelectorAll('.passenger-input');
+        const singleRoomRadios = document.querySelectorAll('input[name="SingleRoomSupplement"]');
+        const singleRoomCount = document.getElementById('SingleRoomCount');
+        const totalAmountSpan = document.getElementById('totalAmount');
+
+        function calculateTotal() {
+            let total = 0;
+            let totalGuests = 0;
+
+            // Tính tiền hành khách và tổng số khách
+            passengerInputs.forEach(input => {
+                const count = parseInt(input.value) || 0;
+                const price = parseFloat(input.dataset.price) || 0;
+                total += count * price;
+                totalGuests += count;
+            });
+
+            // Tính phụ thu phòng đơn
+            const hasSingleRoom = document.querySelector('input[name="SingleRoomSupplement"]:checked').value === 'true';
+            if (hasSingleRoom) {
+                const roomCount = parseInt(singleRoomCount.value) || 0;
+                total += roomCount * 1300000; // 1.3 triệu/phòng
+            }
+
+            // Cập nhật tổng tiền
+            totalAmountSpan.innerHTML = total.toLocaleString('vi-VN');
+
+            // Cập nhật số chỗ còn lại
+            const maxSeats = @Model.Tour.GetRealAvailableSeatsForDate(Model.SelectedDepartureDate);
+            const remainingSeats = Math.max(0, maxSeats - totalGuests);
+            const availableSeatsElement = document.getElementById('availableSeats');
+            if (availableSeatsElement) {
+                availableSeatsElement.textContent = remainingSeats + ' chỗ';
+            }
+
+            // Cập nhật hidden fields với đúng tên
+            document.getElementById('hiddenAdultCount').value = document.getElementById('AdultCount').value || 0;
+            document.getElementById('hiddenChildCount').value = document.getElementById('ChildCount').value || 0;
+            document.getElementById('hiddenInfantCount').value = document.getElementById('InfantCount').value || 0;
+            document.getElementById('hiddenBabyCount').value = document.getElementById('BabyCount').value || 0;
+            document.getElementById('hiddenSingleRoomCount').value = document.getElementById('SingleRoomCount').value || 0;
+
+            // 🔄 Cập nhật QR Code nếu đang chọn chuyển khoản
+            const selectedMethod = document.querySelector('input[name="PaymentMethod"]:checked');
+            if (selectedMethod && selectedMethod.value === 'BankTransfer') {
+                // Delay một chút để đảm bảo DOM đã cập nhật
+                setTimeout(() => {
+                    generateVietQR();
+                }, 100);
+            }
+        }
+
+        // Event listeners
+        passengerInputs.forEach(input => {
+            input.addEventListener('input', calculateTotal);
+        });
+
+        singleRoomRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                singleRoomCount.disabled = this.value === 'false';
+                if (this.value === 'false') {
+                    singleRoomCount.value = 0;
+                }
+                calculateTotal();
+            });
+        });
+
+        singleRoomCount.addEventListener('input', calculateTotal);
+
+        // Đơn giản hóa - chỉ cần cập nhật text nút
+        const paymentMethods = document.querySelectorAll('input[name="PaymentMethod"]');
+        const paymentButtonText = document.getElementById('paymentButtonText');
+
+        function updatePaymentMethod() {
+            const selectedMethod = document.querySelector('input[name="PaymentMethod"]:checked').value;
+
+            if (selectedMethod === 'BankTransfer') {
+                paymentButtonText.textContent = 'Thanh Toán Chuyển Khoản';
+            } else if (selectedMethod === 'Crypto') {
+                paymentButtonText.textContent = 'Thanh Toán Crypto';
+            }
+        }
+
+        // Event listeners cho payment methods
+        paymentMethods.forEach(radio => {
+            radio.addEventListener('change', updatePaymentMethod);
+        });
+
+        // Initial setup
+        updatePaymentMethod();
+    });
+
+    // Validation đơn giản chỉ kiểm tra số người và phương thức thanh toán
+    function handlePaymentSubmit(event) {
+        // Kiểm tra số người lớn - sử dụng đúng tên field
+        const adults = parseInt(document.getElementById('AdultCount').value) || 0;
+        if (adults < 1) {
+            alert('Phải có ít nhất 1 người lớn!');
+            event.preventDefault();
+            return false;
+        }
+
+        // Kiểm tra phương thức thanh toán
+        const paymentMethod = document.querySelector('input[name="PaymentMethod"]:checked');
+        if (!paymentMethod) {
+            alert('Vui lòng chọn phương thức thanh toán!');
+            event.preventDefault();
+            return false;
+        }
+
+        // Để HTML5 validation xử lý các field required khác
+        return true;
+    }
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

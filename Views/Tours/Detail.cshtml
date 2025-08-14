@@ -1,0 +1,721 @@
+﻿@model TourDuLich.Models.Tour
+@{
+    ViewData["Title"] = Model.TourName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Phan Hero - Toi uu hoa -->
+<div class="tour-hero-section">
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        var firstImage = Model.ImageUrl.Split(';').FirstOrDefault();
+        <div class="hero-background" style="background-image: url('@firstImage');">
+            <div class="hero-overlay">
+                <div class="container">
+                    <div class="row align-items-center min-vh-50">
+                        <div class="col-lg-8">
+                            <div class="hero-content">
+                                <div class="tour-category-badge mb-3">
+                                    @switch (Model.Category)
+                                    {
+                                        case TourDuLich.Models.TourCategory.MienBac:
+                                            <span class="badge bg-success fs-6">
+                                                <i class="bi bi-mountain me-1"></i>Tour Miền Bắc
+                                            </span>
+                                            break;
+                                        case TourDuLich.Models.TourCategory.MienTrung:
+                                            <span class="badge bg-warning text-dark fs-6">
+                                                <i class="bi bi-building me-1"></i>Tour Miền Trung
+                                            </span>
+                                            break;
+                                        case TourDuLich.Models.TourCategory.MienNam:
+                                            <span class="badge bg-info fs-6">
+                                                <i class="bi bi-water me-1"></i>Tour Miền Nam
+                                            </span>
+                                            break;
+                                        case TourDuLich.Models.TourCategory.ChauA:
+                                            <span class="badge bg-primary fs-6">
+                                                <i class="bi bi-globe-asia-australia me-1"></i>Tour Châu Á
+                                            </span>
+                                            break;
+                                        case TourDuLich.Models.TourCategory.AuUcMyPhi:
+                                            <span class="badge bg-danger fs-6">
+                                                <i class="bi bi-airplane me-1"></i>Tour Âu-Úc-Mỹ-Phi
+                                            </span>
+                                            break;
+                                    }
+                                </div>
+                                <h1 class="hero-title">@Model.TourName</h1>
+                                <div class="hero-info">
+                                    <div class="info-item">
+                                        <i class="bi bi-geo-alt text-danger"></i>
+                                        <span>@Model.Location</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <span>4.8 (124 đánh giá)</span>
+                                    </div>
+                                </div>
+                                <div class="hero-price">
+                                    <span class="price-label">Chỉ từ:</span>
+                                    <span class="price-value">@Model.Price.ToString("N0") đ</span>
+                                    <span class="price-unit">/người</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Noi dung chinh voi Tab Navigation -->
+<div class="container my-5">
+    <div class="row">
+        <!-- Cot trai - Tab Navigation -->
+        <div class="col-lg-8">
+            <!-- Tab Navigation -->
+            <div class="tour-tabs-container">
+                <ul class="nav nav-pills tour-nav-tabs mb-4" id="tourTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="overview-tab" data-bs-toggle="pill"
+                                data-bs-target="#overview" type="button" role="tab">
+                            <i class="bi bi-file-text me-2"></i>Tổng quan
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="itinerary-tab" data-bs-toggle="pill"
+                                data-bs-target="#itinerary" type="button" role="tab">
+                            <i class="bi bi-calendar-week me-2"></i>Lịch trình
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="gallery-tab" data-bs-toggle="pill"
+                                data-bs-target="#gallery" type="button" role="tab">
+                            <i class="bi bi-images me-2"></i>Hình ảnh
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="reviews-tab" data-bs-toggle="pill"
+                                data-bs-target="#reviews" type="button" role="tab">
+                            <i class="bi bi-info-circle me-2"></i>Ghi Chú
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content tour-tab-content" id="tourTabsContent">
+                    <!-- Tab Tổng quan -->
+                    <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                        <div class="overview-content">
+                            <!-- Mô tả tour -->
+                            <div class="content-section">
+                                <h4 class="content-title">
+                                    <i class="bi bi-info-circle text-primary me-2"></i>Mô tả chuyến đi
+                                </h4>
+                                <div class="description-content">
+                                    @Html.Raw(Model.Description.Replace("\n", "<br>"))
+                                </div>
+                            </div>
+
+                            <!-- Thông tin nhanh -->
+                            <div class="content-section">
+                                <h4 class="content-title">
+                                    <i class="bi bi-calendar-week text-primary me-2"></i>Lịch khởi hành
+                                </h4>
+                                <div class="departure-schedule">
+                                    @{
+                                        var departureDatesWithSeats = Model.GetDepartureDatesWithSeats();
+                                    }
+                                    @if (departureDatesWithSeats.Any())
+                                    {
+                                        <div class="schedule-grid">
+                                            @{
+                                                var vietnamTimeSchedule = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "SE Asia Standard Time");
+                                            }
+                                            @foreach (var dateSeats in departureDatesWithSeats)
+                                            {
+                                                var date = dateSeats.Key;
+                                                var seats = Model.GetRealAvailableSeatsForDate(date); // ✅ SỬ DỤNG SỐ CHỖ THỰC TẾ
+                                                var isLastMinute = (date - vietnamTimeSchedule).TotalDays <= 7;
+                                                var isPast = date < vietnamTimeSchedule;
+                                                var isDateFull = seats <= 0;
+
+                                                <div class="schedule-item @(isPast ? "past" : "") @(isLastMinute && !isPast ? "last-minute" : "") @(isDateFull ? "full" : "")">"
+                                                    <div class="schedule-date">
+                                                        <div class="day">@date.ToString("dd")</div>
+                                                        <div class="month">Tháng @date.ToString("MM")</div>
+                                                        <div class="year">@date.ToString("yyyy")</div>
+                                                    </div>
+                                                    <div class="schedule-info">
+                                                        <h6>@date.ToString("dddd, dd/MM/yyyy", new System.Globalization.CultureInfo("vi-VN"))</h6>
+                                                        <div class="mb-2">
+                                                            @if (isPast)
+                                                            {
+                                                                <span class="badge bg-secondary">Đã khởi hành</span>
+                                                            }
+                                                            else if (isDateFull)
+                                                            {
+                                                                <span class="badge bg-danger">Hết chỗ</span>
+                                                            }
+                                                            else if (isLastMinute)
+                                                            {
+                                                                <span class="badge bg-warning text-dark">
+                                                                    <i class="bi bi-alarm me-1"></i>Giờ chót - @Model.GetCountdownTextForDate(date)
+                                                                </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                var daysLeftLocal = (int)(date - vietnamTimeSchedule).TotalDays;
+                                                                <span class="badge bg-success">Còn @daysLeftLocal ngày</span>
+                                                            }
+                                                        </div>
+                                                        <div>
+                                                            <span class="badge bg-info text-dark">
+                                                                <i class="bi bi-people me-1"></i>@seats chỗ còn lại
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="schedule-action">
+                                                        @if (!isPast && !isDateFull)
+                                                        {
+                                                            <button onclick="handleBookingClick(@Model.TourId, '@date.ToString("yyyy-MM-dd")')" class="btn btn-primary btn-sm">
+                                                                <i class="bi bi-cart-plus me-1"></i>Đặt ngay
+                                                            </button>
+                                                        }
+                                                        else if (isDateFull)
+                                                        {
+                                                            <button class="btn btn-secondary btn-sm" disabled>
+                                                                <i class="bi bi-x-circle me-1"></i>Hết chỗ
+                                                            </button>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-warning">
+                                            <i class="bi bi-exclamation-triangle me-2"></i>
+                                            Chưa có lịch khởi hành được công bố.
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <!-- Tab Lịch trình -->
+                    <div class="tab-pane fade" id="itinerary" role="tabpanel">
+                        <div class="itinerary-content">
+                            <h4 class="content-title">
+                                <i class="bi bi-map text-primary me-2"></i>Lịch trình chi tiết
+                            </h4>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-marker bg-primary">
+                                        <i class="bi bi-airplane text-white"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <h6>Ngày 1: Khởi hành</h6>
+                                        <p>Tập trung tại sân bay, làm thủ tục check-in và khởi hành đến @Model.Location</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker bg-success">
+                                        <i class="bi bi-geo-alt text-white"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <h6>Ngày 2-3: Khám phá</h6>
+                                        <p>Tham quan các điểm đến nổi tiếng, trải nghiệm văn hóa địa phương</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker bg-warning">
+                                        <i class="bi bi-house text-white"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <h6>Ngày cuối: Trở về</h6>
+                                        <p>Kết thúc chuyến đi, trở về điểm xuất phát</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Hình ảnh -->
+                    <div class="tab-pane fade" id="gallery" role="tabpanel">
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <div class="gallery-content">
+                                <h4 class="content-title">
+                                    <i class="bi bi-camera text-primary me-2"></i>Thư viện ảnh
+                                </h4>
+                                <div class="tour-gallery">
+                                    <div class="row g-3">
+                                        @foreach (var image in Model.ImageUrl.Split(';').Where(img => !string.IsNullOrEmpty(img)))
+                                        {
+                                            <div class="col-md-6 col-lg-4">
+                                                <div class="gallery-item">
+                                                    <img src="@image" alt="@Model.TourName" class="gallery-image"
+                                                         data-bs-toggle="modal" data-bs-target="#galleryModal"
+                                                         onclick="showGalleryImage('@image')" />
+                                                    <div class="gallery-overlay">
+                                                        <i class="bi bi-zoom-in"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Tab Ghi Chú -->
+                    <div class="tab-pane fade" id="reviews" role="tabpanel">
+                        <div class="notes-content">
+                            <h4 class="content-title">
+                                <i class="bi bi-info-circle text-primary me-2"></i>Ghi Chú Quan Trọng
+                            </h4>
+
+                            <!-- Giá vé trẻ em -->
+                            <div class="note-section mb-4">
+                                <h5 class="text-primary mb-3">
+                                    <i class="bi bi-people me-2"></i>Giá vé dành cho trẻ em:
+                                </h5>
+                                <div class="note-content">
+                                    <div class="note-item mb-3">
+                                        <strong>Trẻ em dưới 02 tuổi:</strong> miễn phí giá tour, giá vé máy bay theo quy định hãng hàng không. Cha, Mẹ hoặc người thân đi kèm tự lo các chi phí ăn, ngủ, tham quan (nếu có) cho bé.
+                                    </div>
+                                    <div class="note-item mb-3">
+                                        <strong>Trẻ em từ 02 – dưới 05 tuổi:</strong> 100% giá vé máy bay; miễn giá tour. Cha, Mẹ hoặc người thân đi kèm tự lo các chi phí ăn, ngủ, tham quan (nếu có) cho bé. Hai người lớn chỉ kèm 1 trẻ em dưới 5 tuổi, trẻ em thứ 2 trở lên phải mua ½ vé tour.
+                                    </div>
+                                    <div class="note-item mb-3">
+                                        <strong>Trẻ em từ 05 – dưới 11 tuổi:</strong> 100% giá vé máy bay; 50% giá tour. Bao gồm các dịch vụ ăn uống, ghế ngồi trên xe và ngủ chung với gia đình. Hai người lớn chỉ được kèm 1 trẻ em từ 5 đến dưới 11 tuổi, trẻ em thứ 2 trở lên Cha, Mẹ mua thêm 1 suất giường đơn hoặc 1 vé người lớn.
+                                    </div>
+                                    <div class="note-item mb-3">
+                                        <strong>Từ 11 tuổi trở lên:</strong> 100% giá tour và tiêu chuẩn như người lớn.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quy định thanh toán -->
+                            <div class="note-section mb-4">
+                                <h5 class="text-primary mb-3">
+                                    <i class="bi bi-credit-card me-2"></i>Quy định thanh toán, hủy vé:
+                                </h5>
+                                <div class="note-content">
+                                    <div class="note-item mb-3">
+                                        Sau khi xác nhận và thanh toán (ít nhất 50% tiền cọc giữ chỗ và thanh toán đủ 100% tổng giá trị tiền tour trước 10 ngày khởi hành).
+                                    </div>
+                                    <div class="note-item mb-3">
+                                        Khi đến ngày thanh toán đủ 100% tổng giá trị tiền tour, nếu Quý khách không thanh toán đúng hạn và đúng số tiền được xem như Quý khách tự ý huỷ tour và mất hết số tiền đã đặt cọc giữ chỗ.
+                                    </div>
+                                    <div class="note-item mb-3">
+                                        Vé Máy Bay / vé xe lửa / vé tàu cao tốc được xuất ngay sau khi quý khách đóng tiền và có xác nhận sự chính xác về họ, tên (đúng từng ký tự ghi trong hộ chiếu hoặc CMND), ngày-tháng-năm sinh … của hành khách theo yêu cầu của hãng vận chuyển. Mọi sự thay đổi liên quan đến vé đã xuất: ngày giờ đi, tên hành khách, hủy vé, quý khách vui lòng chịu chi phí theo qui định sau:
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phí hủy tour -->
+                            <div class="note-section mb-4">
+                                <h5 class="text-danger mb-3">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>Phí hủy tour:
+                                </h5>
+                                <div class="note-content">
+                                    <div class="note-item mb-2">
+                                        <strong>Ngay sau khi đặt cọc hoặc trước 15 ngày:</strong> phí hủy 30% tiền tour + 100% Vé máy bay.
+                                    </div>
+                                    <div class="note-item mb-2">
+                                        <strong>Hủy 10 ngày trước ngày khởi hành:</strong> phí hủy 50% tiền tour + 100% vé máy bay.
+                                    </div>
+                                    <div class="note-item mb-2">
+                                        <strong>Hủy 07 ngày trước ngày khởi hành:</strong> phí hủy 70% tiền tour + 100% vé máy bay.
+                                    </div>
+                                    <div class="note-item mb-2">
+                                        <strong>Hủy 05 ngày trước ngày khởi hành:</strong> phí hủy 100% tiền tour + 100% vé máy bay.
+                                    </div>
+                                    <div class="note-item mb-3 text-danger">
+                                        <strong>Lưu ý:</strong> Trường hợp quý khách đến trễ giờ khởi hành được tính là hủy 5 ngày trước ngày khởi hành.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quy định chung -->
+                            <div class="note-section mb-4">
+                                <h5 class="text-primary mb-3">
+                                    <i class="bi bi-clipboard-check me-2"></i>Quy định chung:
+                                </h5>
+                                <div class="note-content">
+                                    <div class="note-item mb-3">
+                                        Do tính chất là đoàn ghép khách lẻ, Du Lịch Việt sẽ có trách nhiệm nhận khách đăng ký cho đủ đoàn (10 khách người lớn trở lên) thì đoàn sẽ khởi hành đúng lịch trình. Nếu số lượng đoàn dưới 10 khách, công ty có trách nhiệm thông báo cho khách trước ngày khởi hành 3 ngày và sẽ thỏa thuận lại ngày khởi hành mới hoặc hoàn trả toàn bộ số tiền đã đặt cọc tour.
+                                    </div>
+                                    <div class="note-item mb-3">
+                                        Việc huỷ bỏ chuyến đi phải được thông báo trực tiếp với Công ty hoặc qua fax, email, tin nhắn và phải được Công ty xác nhận. Việc huỷ bỏ bằng điện thoại không được chấp nhận.
+                                    </div>
+                                    <div class="note-item mb-3">
+                                        Các ngày đặt cọc, thanh toán, huỷ và dời tour: không tính thứ 7, Chủ Nhật.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lưu ý giấy tờ -->
+                            <div class="note-section mb-4">
+                                <h5 class="text-warning mb-3">
+                                    <i class="bi bi-card-text me-2"></i>Lưu ý về giấy tờ:
+                                </h5>
+                                <div class="note-content">
+                                    <div class="note-item mb-3">
+                                        Khi đăng ký tour khách hàng bắt buộc phải gởi giấy tờ tùy thân cho đơn vị du lịch để vào tên xuất vé và mua bảo hiểm du lịch. Những giấy tờ cá nhân của khách hàng (CMND hoặc Passport) thuộc về trách nhiệm của khách hàng.
+                                    </div>
+                                    <div class="note-item mb-3">
+                                        <strong>Đối với khách Nước ngoài/Việt Kiều:</strong> Khi đi tour phải mang theo đầy đủ Passport (Hộ Chiếu), Visa Việt Nam bản chính còn hạn sử dụng làm thủ tục lên máy bay theo qui định hàng không.
+                                    </div>
+                                    <div class="note-item mb-3">
+                                        <strong>Trẻ em (dưới 12 tuổi):</strong> khi đi du lịch mang theo giấy khai sinh (bản chính hoặc sao y có thị thực còn hạn sử dụng) để làm thủ tục hàng không.
+                                    </div>
+                                    <div class="note-item mb-3">
+                                        <strong>Quý khách từ 14 tuổi:</strong> bắt buộc phải có CMND hoặc Passport (còn hạn sử dụng), KHÔNG SỬ DỤNG GIẤY KHAI SINH. Nếu Quý khách từ 14 tuổi chưa có CMND hoặc Passport bắt buộc phải có Giấy xác nhận nhân thân (Có xác nhận chính quyền còn hạn sử dụng) + Giấy khai sinh.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lưu ý cuối -->
+                            <div class="alert alert-info">
+                                <h6><i class="bi bi-info-circle me-2"></i>Lưu ý cuối:</h6>
+                                <ul class="mb-0">
+                                    <li>Một số thứ tự, chi tiết trong chương trình; giờ bay; giờ xe lửa; giờ tàu cao tốc có thể thay đổi để phù hợp với tình hình thực tế của chuyến đi (thời tiết, giao thông…)</li>
+                                    <li>Qui định nhận & trả phòng tại các khách sạn/resort: nhận phòng sau 14H00 và trả phòng trước 12H00.</li>
+                                    <li>Hành lý và tư trang du khách tự bảo quản trong quá trình du lịch.</li>
+                                    <li>Vì lý do sức khỏe và an toàn vệ sinh thực phẩm, Quý Khách vui lòng không mang thực phẩm từ bên ngoài vào nhà hàng, khách sạn.</li>
+                                </ul>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <h5 class="text-primary">
+                                    <i class="bi bi-heart-fill me-2"></i>
+                                    KÍNH CHÚC QUÝ KHÁCH CHUYẾN ĐI THÚ VỊ VÀ BỔ ÍCH!
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột phải - Booking Card Tối ưu -->
+        <div class="col-lg-4">
+            <div class="booking-card sticky-top">
+                <!-- Header với giá -->
+                <div class="booking-header">
+                    <div class="price-display">
+                        <span class="price-amount">@Model.Price.ToString("N0") đ</span>
+                        <span class="price-unit">/người</span>
+                    </div>
+                    @{
+                        var nextDepartureDate = Model.GetNextDepartureDate();
+                        var vietnamNow = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "SE Asia Standard Time");
+                        var isExpired = nextDepartureDate == null || nextDepartureDate < vietnamNow;
+                        var availableSeatsForNextDate = nextDepartureDate != null ? Model.GetRealAvailableSeatsForDate(nextDepartureDate.Value) : 0;
+                        var isFull = availableSeatsForNextDate <= 0;
+                        var daysLeft = nextDepartureDate != null ? (int)(nextDepartureDate.Value - vietnamNow).TotalDays : 0;
+                    }
+                    @if (!isExpired && !isFull)
+                    {
+                        <div class="urgency-badge">
+                            @if (daysLeft <= 3)
+                            {
+                                <span class="badge bg-danger">
+                                    <i class="bi bi-exclamation-triangle me-1"></i>Còn @daysLeft ngày
+                                </span>
+                            }
+                            else if (availableSeatsForNextDate <= 5)
+                            {
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-people me-1"></i>Còn @availableSeatsForNextDate chỗ
+                                </span>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <!-- Thông tin tour -->
+                <div class="booking-details">
+                    @{
+                        var nextDeparture = Model.GetNextDepartureDate();
+                    }
+                    @if (nextDeparture != null)
+                    {
+                        <div class="detail-row">
+                            <div class="detail-icon">
+                                <i class="bi bi-calendar-event text-primary"></i>
+                            </div>
+                            <div class="detail-info">
+                                <span class="detail-label">Khởi hành gần nhất</span>
+                                <span class="detail-value">@nextDeparture.Value.ToString("dd/MM/yyyy")</span>
+                            </div>
+                        </div>
+                    }
+                    <div class="detail-row">
+                        <div class="detail-icon">
+                            <i class="bi bi-geo-alt text-danger"></i>
+                        </div>
+                        <div class="detail-info">
+                            <span class="detail-label">Điểm đến</span>
+                            <span class="detail-value">@Model.Location</span>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-icon">
+                            <i class="bi bi-clock text-info"></i>
+                        </div>
+                        <div class="detail-info">
+                            <span class="detail-label">Thời gian</span>
+                            <span class="detail-value">@Model.Duration</span>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-icon">
+                            <i class="bi bi-bus-front text-success"></i>
+                        </div>
+                        <div class="detail-info">
+                            <span class="detail-label">Phương tiện</span>
+                            <span class="detail-value">Xe du lịch cao cấp</span>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-icon">
+                            <i class="bi bi-geo-alt-fill text-primary"></i>
+                        </div>
+                        <div class="detail-info">
+                            <span class="detail-label">Xuất phát từ</span>
+                            <span class="detail-value">TP. Hồ Chí Minh</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="booking-actions">
+                    @if (isExpired)
+                    {
+                        <div class="status-message expired">
+                            <i class="bi bi-x-circle me-2"></i>
+                            <span>Đã hết hạn đăng ký</span>
+                        </div>
+                    }
+                    else if (isFull)
+                    {
+                        <div class="status-message full">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            <span>Tour đã hết chỗ</span>
+                        </div>
+                        <button class="btn btn-outline-primary btn-lg w-100 mt-3">
+                            <i class="bi bi-bell me-2"></i>Thông báo khi có chỗ
+                        </button>
+                    }
+                    else
+                    {
+                        <button onclick="handleBookingClick(@Model.TourId, '@(Model.GetNextDepartureDate()?.ToString("yyyy-MM-dd") ?? "")')" class="btn btn-primary btn-lg w-100 booking-btn">
+                            <i class="bi bi-cart-plus me-2"></i>Đặt tour ngay
+                        </button>
+                        <div class="secondary-actions">
+                            <button class="btn btn-outline-primary w-100 mt-2">
+                                <i class="bi bi-heart me-2"></i>Yêu thích
+                            </button>
+                            <button class="btn btn-outline-secondary w-100 mt-2">
+                                <i class="bi bi-share me-2"></i>Chia sẻ
+                            </button>
+                        </div>
+                    }
+                </div>
+
+                <!-- Contact Support -->
+                <div class="booking-support">
+                    <div class="support-header">
+                        <i class="bi bi-headset text-success me-2"></i>
+                        <span>Cần hỗ trợ?</span>
+                    </div>
+                    <div class="support-contacts">
+                        <a href="tel:19001234" class="support-item">
+                            <i class="bi bi-telephone"></i>
+                            <span>1900-1234</span>
+                        </a>
+                        <a href="mailto:support@tourdulich.com" class="support-item">
+                            <i class="bi bi-envelope"></i>
+                            <span>Email hỗ trợ</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Trust badges -->
+                <div class="trust-badges">
+                    <div class="badge-item">
+                        <i class="bi bi-shield-check text-success"></i>
+                        <span>Đảm bảo hoàn tiền</span>
+                    </div>
+                    <div class="badge-item">
+                        <i class="bi bi-award text-warning"></i>
+                        <span>Dịch vụ 5 sao</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TOUR LIÊN QUAN -->
+<div class="related-tours-section">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">
+                <i class="bi bi-compass text-primary me-3"></i>
+                Khám Phá Thêm Các Tour Khác
+            </h2>
+            <p class="section-subtitle">Tìm hiểu thêm những điểm đến tuyệt vời khác dành cho bạn</p>
+        </div>
+
+        <div class="related-tours-grid" id="relatedToursGrid">
+            <!-- Tours sẽ được load bằng JavaScript -->
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Đang tải...</span>
+                </div>
+                <p class="mt-3 text-muted">Đang tải các tour khác...</p>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="@Url.Action("Index", "Tours")" class="btn btn-outline-primary btn-lg">
+                <i class="bi bi-grid-3x3-gap me-2"></i>
+                Xem Tất Cả Tour
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal hiển thị ảnh lớn -->
+<div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="galleryModalLabel">@Model.TourName</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-0">
+                <img id="galleryModalImage" src="" alt="Tour Image" class="img-fluid w-100" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CSS đã được chuyển vào site.css -->
+
+<script>
+    function showGalleryImage(imageSrc) {
+        document.getElementById('galleryModalImage').src = imageSrc;
+    }
+
+    // Xử lý click nút đặt tour với ngày khởi hành cụ thể
+    function handleBookingClick(tourId, departureDate = '') {
+        // Kiểm tra đăng nhập bằng session
+        var isUserLoggedIn = @Html.Raw((Context.Session.GetInt32("UserId") != null).ToString().ToLower());
+
+        if (isUserLoggedIn) {
+            // Đã đăng nhập - chuyển đến trang thanh toán với ngày khởi hành
+            var url = '@Url.Action("Checkout", "Booking")?id=' + tourId;
+            if (departureDate) {
+                url += '&departureDate=' + encodeURIComponent(departureDate);
+            }
+            window.location.href = url;
+        } else {
+            // Chưa đăng nhập - hiện modal đăng nhập
+            var loginModal = new bootstrap.Modal(document.getElementById('loginRegisterModal'));
+            loginModal.show();
+
+            // Thêm thông báo nhỏ
+            setTimeout(function() {
+                var alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-info alert-dismissible fade show mt-2';
+                alertDiv.innerHTML = '<i class="bi bi-info-circle me-2"></i>Vui lòng đăng nhập để đặt tour! <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                document.querySelector('#loginRegisterModal .modal-body').insertBefore(alertDiv, document.querySelector('#loginRegisterModal .nav-tabs'));
+            }, 300);
+        }
+    }
+
+    // Load tour liên quan
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Detail page loaded successfully');
+        loadRelatedTours();
+    });
+
+    // Function để load các tour khác
+    function loadRelatedTours() {
+        const currentTourId = @Model.TourId;
+
+        fetch('/Tours/GetRelatedTours?currentTourId=' + currentTourId)
+            .then(response => response.json())
+            .then(tours => {
+                displayRelatedTours(tours);
+            })
+            .catch(error => {
+                console.error('Error loading related tours:', error);
+                document.getElementById('relatedToursGrid').innerHTML =
+                    '<div class="text-center py-5"><p class="text-muted">Không thể tải các tour khác</p></div>';
+            });
+    }
+
+    // Function để hiển thị tour liên quan
+    function displayRelatedTours(tours) {
+        const grid = document.getElementById('relatedToursGrid');
+
+        if (!tours || tours.length === 0) {
+            grid.innerHTML = '<div class="text-center py-5"><p class="text-muted">Không có tour nào khác</p></div>';
+            return;
+        }
+
+        const toursHtml = tours.map(tour => `
+            <div class="related-tour-card" onclick="goToTour(${tour.tourId})">
+                <div class="related-tour-image" style="background-image: url('${tour.imageUrl || '/images/default-tour.jpg'}')"></div>
+                <div class="related-tour-content">
+                    <h5 class="related-tour-title">${tour.tourName}</h5>
+                    <div class="related-tour-location">
+                        <i class="bi bi-geo-alt text-danger"></i>
+                        <span>${tour.location}</span>
+                    </div>
+                    <div class="related-tour-info">
+                        <div class="related-tour-duration">
+                            <i class="bi bi-clock text-primary"></i>
+                            <span>${tour.duration}</span>
+                        </div>
+                        <div class="related-tour-price">
+                            ${formatPrice(tour.price)} đ
+                        </div>
+                    </div>
+                    <div class="related-tour-features">
+                        <span class="related-tour-badge">
+                            <i class="bi bi-people me-1"></i>${tour.availableSeats} chỗ
+                        </span>
+                        ${tour.category === 0 ? '<span class="related-tour-badge">Trong nước</span>' : '<span class="related-tour-badge">Nước ngoài</span>'}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        grid.innerHTML = toursHtml;
+    }
+
+    // Function để chuyển đến tour khác
+    function goToTour(tourId) {
+        window.location.href = '/Tours/Detail/' + tourId;
+    }
+
+    // Function format giá tiền
+    function formatPrice(price) {
+        return new Intl.NumberFormat('vi-VN').format(price);
+    }
+</script>

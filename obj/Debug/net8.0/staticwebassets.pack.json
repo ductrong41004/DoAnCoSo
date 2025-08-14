@@ -1,0 +1,457 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\257511e6f75b4005194a4_4212e099.jpg",
+      "PackagePath": "staticwebassets\\images\\257511e6f75b4005194a4_4212e099.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\257511e6f75b4005194a4_ceedc4c6.jpg",
+      "PackagePath": "staticwebassets\\images\\257511e6f75b4005194a4_ceedc4c6.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\614ac3da25679239cb761_2eceba1e.jpg",
+      "PackagePath": "staticwebassets\\images\\614ac3da25679239cb761_2eceba1e.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\918c431ea5a312fd4bb26_24d686e5.jpg",
+      "PackagePath": "staticwebassets\\images\\918c431ea5a312fd4bb26_24d686e5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\918c431ea5a312fd4bb26_4d78646a.jpg",
+      "PackagePath": "staticwebassets\\images\\918c431ea5a312fd4bb26_4d78646a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Anh2 du lich_ff97e53b.png",
+      "PackagePath": "staticwebassets\\images\\Anh2 du lich_ff97e53b.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Bali Indonesia_9b602950.jpg",
+      "PackagePath": "staticwebassets\\images\\Bali Indonesia_9b602950.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Banahil_9729b20f.png",
+      "PackagePath": "staticwebassets\\images\\Banahil_9729b20f.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Bangkok_33eb9f82.jpg",
+      "PackagePath": "staticwebassets\\images\\Bangkok_33eb9f82.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\CanTho_b81d3d3a.jpg",
+      "PackagePath": "staticwebassets\\images\\CanTho_b81d3d3a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Cape Town - Johannesburg_8f534032.jpg",
+      "PackagePath": "staticwebassets\\images\\Cape Town - Johannesburg_8f534032.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Colombo - Kandy_87993999.jpg",
+      "PackagePath": "staticwebassets\\images\\Colombo - Kandy_87993999.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\DaLat_82caf0cc.jpg",
+      "PackagePath": "staticwebassets\\images\\DaLat_82caf0cc.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\DaNang_46b5c93a.jpg",
+      "PackagePath": "staticwebassets\\images\\DaNang_46b5c93a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Dalat_61999bd4.jpg",
+      "PackagePath": "staticwebassets\\images\\Dalat_61999bd4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\HaLongBay_6495d2d0.jpg",
+      "PackagePath": "staticwebassets\\images\\HaLongBay_6495d2d0.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\HanQuoc_07dca15c.jpg",
+      "PackagePath": "staticwebassets\\images\\HanQuoc_07dca15c.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Kathmandu - Pokhara_68f41bde.jpg",
+      "PackagePath": "staticwebassets\\images\\Kathmandu - Pokhara_68f41bde.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\LAsvegas_bb6951b5.jpg",
+      "PackagePath": "staticwebassets\\images\\LAsvegas_bb6951b5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Malai+Singapo_6bc3e2d2.jpg",
+      "PackagePath": "staticwebassets\\images\\Malai+Singapo_6bc3e2d2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Manila - Boracay_5851e690.jpg",
+      "PackagePath": "staticwebassets\\images\\Manila - Boracay_5851e690.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\MocChau_5870653b.jpg",
+      "PackagePath": "staticwebassets\\images\\MocChau_5870653b.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\New York - Washington_75dc5355.jpg",
+      "PackagePath": "staticwebassets\\images\\New York - Washington_75dc5355.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\NhaTrang_451c5533.jpg",
+      "PackagePath": "staticwebassets\\images\\NhaTrang_451c5533.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\NinhBinh_f50ff69c.jpg",
+      "PackagePath": "staticwebassets\\images\\NinhBinh_f50ff69c.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Osaka_7aba81e4.jpg",
+      "PackagePath": "staticwebassets\\images\\Osaka_7aba81e4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Paris - London_bfadd0fd.jpg",
+      "PackagePath": "staticwebassets\\images\\Paris - London_bfadd0fd.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Phnom Penh - Siem Reap_d9c4fc92.jpg",
+      "PackagePath": "staticwebassets\\images\\Phnom Penh - Siem Reap_d9c4fc92.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\PhuQuoc_7d4cecdb.jpg",
+      "PackagePath": "staticwebassets\\images\\PhuQuoc_7d4cecdb.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\PhuQuoc_b10b090a.jpg",
+      "PackagePath": "staticwebassets\\images\\PhuQuoc_b10b090a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\QuyNhon_2a274deb.jpg",
+      "PackagePath": "staticwebassets\\images\\QuyNhon_2a274deb.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Rome - Venice - Milan_1b5b7dd7.jpg",
+      "PackagePath": "staticwebassets\\images\\Rome - Venice - Milan_1b5b7dd7.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Singapo_146fe498.jpg",
+      "PackagePath": "staticwebassets\\images\\Singapo_146fe498.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Sydney - Melbourne_b3bcee15.jpg",
+      "PackagePath": "staticwebassets\\images\\Sydney - Melbourne_b3bcee15.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Thailand_6c291fe7.jpg",
+      "PackagePath": "staticwebassets\\images\\Thailand_6c291fe7.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Tourquocte_edc16ac1.jpg",
+      "PackagePath": "staticwebassets\\images\\Tourquocte_edc16ac1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\VinhHaLong_8dbec252.jpg",
+      "PackagePath": "staticwebassets\\images\\VinhHaLong_8dbec252.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\VungTau_8b2082f2.jpg",
+      "PackagePath": "staticwebassets\\images\\VungTau_8b2082f2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Yangon - Bagan_834a0c67.jpg",
+      "PackagePath": "staticwebassets\\images\\Yangon - Bagan_834a0c67.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\Yangon - Bagan_979e2292.jpg",
+      "PackagePath": "staticwebassets\\images\\Yangon - Bagan_979e2292.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\bg\\anhbia.jpg",
+      "PackagePath": "staticwebassets\\images\\bg\\anhbia.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\fafa2596c32b74752d3a5_80aa3cc8.jpg",
+      "PackagePath": "staticwebassets\\images\\fafa2596c32b74752d3a5_80aa3cc8.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\fafa2596c32b74752d3a5_d9e5e530.jpg",
+      "PackagePath": "staticwebassets\\images\\fafa2596c32b74752d3a5_d9e5e530.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\pngtree-salon-logo-png-image_4004444_e266923a.png",
+      "PackagePath": "staticwebassets\\images\\pngtree-salon-logo-png-image_4004444_e266923a.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\products\\tour1.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\tour1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\products\\tour_paris.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\tour_paris.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\products\\tour_seoul.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\tour_seoul.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\images\\products\\tour_tokyo.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\tour_tokyo.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Downloads\\TourDuLich\\TourDuLich\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.TourDuLich.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.TourDuLich.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.TourDuLich.props",
+      "PackagePath": "build\\TourDuLich.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.TourDuLich.props",
+      "PackagePath": "buildMultiTargeting\\TourDuLich.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.TourDuLich.props",
+      "PackagePath": "buildTransitive\\TourDuLich.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

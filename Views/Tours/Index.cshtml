@@ -1,0 +1,385 @@
+﻿@model TourDuLich.Controllers.ToursIndexViewModel
+@{
+    ViewData["Title"] = "Trang chủ Tour Du Lịch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- CSS da duoc chuyen vao site.css -->
+
+<!-- Banner lon va Tim kiem -->
+
+
+
+
+<!-- Banner lon va Tim kiem -->
+<div class="hero-ivivu mb-4">
+    <div class="hero-overlay"></div>
+    <form class="ivivu-searchbox shadow" autocomplete="off">
+        <div class="search-group">
+            <span class="search-icon"><i class="bi bi-geo-alt"></i></span>
+            <input type="text" placeholder="Bạn muốn đi đâu?" class="search-input" />
+        </div>
+        <div class="search-group">
+            <span class="search-icon"><i class="bi bi-calendar-event"></i></span>
+            <input type="date" class="search-input" />
+        </div>
+        <div class="search-group">
+            <span class="search-icon"><i class="bi bi-signpost"></i></span>
+            <select class="search-input">
+                <option>Khởi hành từ Hồ Chí Minh</option>
+                <option>Khởi hành từ Hà Nội</option>
+                <option>Khởi hành từ Đà Nẵng</option>
+            </select>
+        </div>
+        <button class="btn-find" type="submit">
+            <i class="bi bi-search"></i> Tìm
+        </button>
+    </form>
+</div>
+
+<!-- Thong tin hang ngang -->
+<div class="ivivu-info-row">
+    <div class="ivivu-info-item">
+        <i class="bi bi-globe-americas"></i>
+        <div><b>1.000+ tours</b><br><small>Chất lượng trong và ngoài nước</small></div>
+    </div>
+    <div class="ivivu-info-item">
+        <i class="bi bi-emoji-heart-eyes"></i>
+        <div><b>10K+ đánh giá 5 sao</b><br><small>Khách hàng đã đặt tour</small></div>
+    </div>
+    <div class="ivivu-info-item">
+        <i class="bi bi-cash-stack"></i>
+        <div><b>100+ ưu đãi mỗi ngày</b><br><small>Đặt sớm, nhóm, phút chót</small></div>
+    </div>
+</div>
+
+<!-- ✅ 1. Tour Giờ Chót -->
+<div class="tour-list-section container">
+    <div class="section-header">
+        <h2 class="fw-bold mb-0 text-gradient" style="font-size:2.1rem; background: linear-gradient(90deg,#dc3545,#fd7e14); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <i class="bi bi-clock-history me-2"></i>Tour Giờ Chót
+        </h2>
+    </div>
+    <div class="tour-carousel" id="urgentCarousel">
+        <button class="carousel-nav carousel-prev" onclick="slideCarousel('urgentCarousel', -1)">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+        <div class="tour-carousel-container">
+            @foreach (var tour in Model.UrgentTours)
+            {
+                <div class="tour-card">
+                    <img src="@(tour.ImageUrl != null ? tour.ImageUrl.Split(';')[0] : "/images/default.jpg")" class="tour-img" alt="@tour.TourName" />
+                    <span class="tour-badge countdown-badge" data-departure-date="@(tour.GetNextDepartureDate()?.ToString("yyyy-MM-ddTHH:mm:ss") ?? "")">
+                        <i class="bi bi-alarm"></i> <span class="countdown-text">@tour.GetCountdownText()</span>
+                    </span>
+                    <div class="p-3">
+                        <div class="fw-bold mb-1" style="font-size:1.18rem;">@tour.TourName</div>
+                        <div class="tour-desc text-secondary mb-2" title="@tour.Description">@tour.Description</div>
+                        <div class="fw-bold text-danger mb-2" style="font-size:1.15rem;">
+                            @String.Format("{0:#,0}", tour.Price) đ
+                        </div>
+                        <a href="@Url.Action("Detail", "Tours", new { id = tour.TourId })" class="btn btn-danger btn-sm fw-bold mt-2 rounded-pill px-4 shadow-sm">
+                            <i class="bi bi-arrow-right-circle"></i> Đặt Ngay
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="carousel-nav carousel-next" onclick="slideCarousel('urgentCarousel', 1)">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<!-- ✅ 2. Tour Miền Bắc -->
+<div class="tour-list-section container">
+    <div class="section-header">
+        <h2 class="fw-bold mb-0 text-gradient" style="font-size:2.1rem; background: linear-gradient(90deg,#28a745,#20c997); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <i class="bi bi-mountain me-2"></i>Tour Miền Bắc
+        </h2>
+    </div>
+    <div class="tour-carousel" id="domesticCarousel">
+        <button class="carousel-nav carousel-prev" onclick="slideCarousel('domesticCarousel', -1)">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+        <div class="tour-carousel-container">
+            @foreach (var tour in Model.MienBacTours)
+            {
+                <div class="tour-card">
+                    <img src="@(tour.ImageUrl != null ? tour.ImageUrl.Split(';')[0] : "/images/default.jpg")" class="tour-img" alt="@tour.TourName" />
+                    <span class="tour-badge" style="background: linear-gradient(90deg, #28a745 0%, #20c997 100%);">
+                        <i class="bi bi-house-heart"></i> Việt Nam
+                    </span>
+                    <div class="p-3">
+                        <div class="fw-bold mb-1" style="font-size:1.18rem;">@tour.TourName</div>
+                        <div class="tour-desc text-secondary mb-2" title="@tour.Description">@tour.Description</div>
+                        <div class="fw-bold text-success mb-2" style="font-size:1.15rem;">
+                            @String.Format("{0:#,0}", tour.Price) đ
+                        </div>
+                        <a href="@Url.Action("Detail", "Tours", new { id = tour.TourId })" class="btn btn-success btn-sm fw-bold mt-2 rounded-pill px-4 shadow-sm">
+                            <i class="bi bi-arrow-right-circle"></i> Xem Tour
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="carousel-nav carousel-next" onclick="slideCarousel('domesticCarousel', 1)">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<!-- ✅ 3. Tour Miền Trung -->
+<div class="tour-list-section container">
+    <div class="section-header">
+        <h2 class="fw-bold mb-0 text-gradient" style="font-size:2.1rem; background: linear-gradient(90deg,#ffc107,#fd7e14); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <i class="bi bi-building me-2"></i>Tour Miền Trung
+        </h2>
+    </div>
+    <div class="tour-carousel" id="mienTrungCarousel">
+        <button class="carousel-nav carousel-prev" onclick="slideCarousel('mienTrungCarousel', -1)">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+        <div class="tour-carousel-container">
+            @foreach (var tour in Model.MienTrungTours)
+            {
+                <div class="tour-card">
+                    <img src="@(tour.ImageUrl != null ? tour.ImageUrl.Split(';')[0] : "/images/default.jpg")" class="tour-img" alt="@tour.TourName" />
+                    <span class="tour-badge" style="background: linear-gradient(90deg, #ffc107 0%, #fd7e14 100%);">
+                        <i class="bi bi-building"></i> Miền Trung
+                    </span>
+                    <div class="tour-content">
+                        <h5 class="tour-title">@tour.TourName</h5>
+                        <p class="tour-location"><i class="bi bi-geo-alt"></i>
+                            @if (tour.Category == TourCategory.MienBac || tour.Category == TourCategory.MienTrung || tour.Category == TourCategory.MienNam)
+                            {
+                                @:Việt Nam
+                            }
+                            else
+                            {
+                                @tour.Location
+                            }
+                        </p>
+                        <div class="tour-price">@tour.Price.ToString("N0") đ</div>
+                        <a href="/Tours/Detail/@tour.TourId" class="tour-btn">Xem Tour</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="carousel-nav carousel-next" onclick="slideCarousel('mienTrungCarousel', 1)">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<!-- ✅ 4. Tour Miền Nam -->
+<div class="tour-list-section container">
+    <div class="section-header">
+        <h2 class="fw-bold mb-0 text-gradient" style="font-size:2.1rem; background: linear-gradient(90deg,#17a2b8,#20c997); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <i class="bi bi-water me-2"></i>Tour Miền Nam
+        </h2>
+    </div>
+    <div class="tour-carousel" id="mienNamCarousel">
+        <button class="carousel-nav carousel-prev" onclick="slideCarousel('mienNamCarousel', -1)">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+        <div class="tour-carousel-container">
+            @foreach (var tour in Model.MienNamTours)
+            {
+                <div class="tour-card">
+                    <img src="@(tour.ImageUrl != null ? tour.ImageUrl.Split(';')[0] : "/images/default.jpg")" class="tour-img" alt="@tour.TourName" />
+                    <span class="tour-badge" style="background: linear-gradient(90deg, #17a2b8 0%, #20c997 100%);">
+                        <i class="bi bi-water"></i> Miền Nam
+                    </span>
+                    <div class="tour-content">
+                        <h5 class="tour-title">@tour.TourName</h5>
+                        <p class="tour-location"><i class="bi bi-geo-alt"></i>
+                            @if (tour.Category == TourCategory.MienBac || tour.Category == TourCategory.MienTrung || tour.Category == TourCategory.MienNam)
+                            {
+                                @:Việt Nam
+                            }
+                            else
+                            {
+                                @tour.Location
+                            }
+    
+                        </p>
+                        <div class="tour-price">@tour.Price.ToString("N0") đ</div>
+                        <a href="/Tours/Detail/@tour.TourId" class="tour-btn">Xem Tour</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="carousel-nav carousel-next" onclick="slideCarousel('mienNamCarousel', 1)">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<!-- ✅ 5. Tour Châu Á -->
+<div class="tour-list-section container">
+    <div class="section-header">
+        <h2 class="fw-bold mb-0 text-gradient" style="font-size:2.1rem; background: linear-gradient(90deg,#dc3545,#fd7e14); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <i class="bi bi-globe-asia-australia me-2"></i>Tour Châu Á
+        </h2>
+    </div>
+    <div class="tour-carousel" id="asiaCarousel">
+        <button class="carousel-nav carousel-prev" onclick="slideCarousel('asiaCarousel', -1)">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+        <div class="tour-carousel-container">
+            @foreach (var tour in Model.ChauATours)
+            {
+                <div class="tour-card">
+                    <img src="@(tour.ImageUrl != null ? tour.ImageUrl.Split(';')[0] : "/images/default.jpg")" class="tour-img" alt="@tour.TourName" />
+                    <span class="tour-badge" style="background: linear-gradient(90deg, #dc3545 0%, #fd7e14 100%);">
+                        <i class="bi bi-airplane"></i> Châu Á
+                    </span>
+                    <div class="p-3">
+                        <div class="fw-bold mb-1" style="font-size:1.18rem;">@tour.TourName</div>
+                        <div class="tour-desc text-secondary mb-2" title="@tour.Description">@tour.Description</div>
+                        <div class="fw-bold text-danger mb-2" style="font-size:1.15rem;">
+                            @String.Format("{0:#,0}", tour.Price) đ
+                        </div>
+                        <a href="@Url.Action("Detail", "Tours", new { id = tour.TourId })" class="btn btn-danger btn-sm fw-bold mt-2 rounded-pill px-4 shadow-sm">
+                            <i class="bi bi-arrow-right-circle"></i> Xem Tour
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="carousel-nav carousel-next" onclick="slideCarousel('asiaCarousel', 1)">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<!-- ✅ 6. Tour Du Lịch Âu-Úc-Mỹ-Phi -->
+<div class="tour-list-section container">
+    <div class="section-header">
+        <h2 class="fw-bold mb-0 text-gradient" style="font-size:2.1rem; background: linear-gradient(90deg,#6f42c1,#e83e8c); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <i class="bi bi-globe-europe-africa me-2"></i>Tour Du Lịch Âu-Úc-Mỹ-Phi
+        </h2>
+    </div>
+    <div class="tour-carousel" id="internationalCarousel">
+        <button class="carousel-nav carousel-prev" onclick="slideCarousel('internationalCarousel', -1)">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+        <div class="tour-carousel-container">
+            @foreach (var tour in Model.AuUcMyPhiTours)
+            {
+                <div class="tour-card">
+                    <img src="@(tour.ImageUrl != null ? tour.ImageUrl.Split(';')[0] : "/images/default.jpg")" class="tour-img" alt="@tour.TourName" />
+                    <span class="tour-badge" style="background: linear-gradient(90deg, #6f42c1 0%, #e83e8c 100%);">
+                        <i class="bi bi-globe"></i> Quốc Tế
+                    </span>
+                    <div class="p-3">
+                        <div class="fw-bold mb-1" style="font-size:1.18rem;">@tour.TourName</div>
+                        <div class="tour-desc text-secondary mb-2" title="@tour.Description">@tour.Description</div>
+                        <div class="fw-bold mb-2" style="font-size:1.15rem; color: #6f42c1;">
+                            @String.Format("{0:#,0}", tour.Price) đ
+                        </div>
+                        <a href="@Url.Action("Detail", "Tours", new { id = tour.TourId })" class="btn btn-sm fw-bold mt-2 rounded-pill px-4 shadow-sm" style="background: linear-gradient(90deg, #6f42c1 0%, #e83e8c 100%); color: white;">
+                            <i class="bi bi-arrow-right-circle"></i> Xem Tour
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="carousel-nav carousel-next" onclick="slideCarousel('internationalCarousel', 1)">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<script>
+    // ✅ Carousel functionality - Đã sửa logic
+    let carouselPositions = {};
+
+    function slideCarousel(carouselId, direction) {
+        const carousel = document.getElementById(carouselId);
+        const container = carousel.querySelector('.tour-carousel-container');
+        const cards = container.querySelectorAll('.tour-card');
+
+        if (cards.length <= 3) return; // Nếu ít hơn 3 tour thì không cần carousel
+
+        const cardWidth = cards[0].offsetWidth + 20; // width + margin
+        const visibleCards = 3; // Hiển thị 3 tour cùng lúc
+        const maxSlides = Math.ceil(cards.length / visibleCards); // Số lần slide tối đa
+
+        if (!carouselPositions[carouselId]) {
+            carouselPositions[carouselId] = 0;
+        }
+
+        // ✅ Sửa logic: direction = 1 là next (sang phải), direction = -1 là prev (sang trái)
+        carouselPositions[carouselId] -= direction; // Đảo ngược dấu
+
+        // ✅ Giới hạn vị trí
+        if (carouselPositions[carouselId] < 0) {
+            carouselPositions[carouselId] = maxSlides - 1; // Quay về cuối
+        }
+        if (carouselPositions[carouselId] >= maxSlides) {
+            carouselPositions[carouselId] = 0; // Quay về đầu
+        }
+
+        // ✅ Di chuyển container
+        const translateX = -carouselPositions[carouselId] * cardWidth * visibleCards;
+        container.style.transform = `translateX(${translateX}px)`;
+    }
+
+    // ✅ Countdown functionality cho Tour Giờ Chót - đếm ngược đến ngày khởi hành
+    function updateCountdowns() {
+        const countdownElements = document.querySelectorAll('.countdown-badge');
+
+        countdownElements.forEach(element => {
+            const departureDateStr = element.getAttribute('data-departure-date');
+            if (!departureDateStr) return;
+
+            const departureDate = new Date(departureDateStr);
+            // Sử dụng múi giờ Việt Nam (GMT+7)
+            const now = new Date();
+            const vietnamOffset = 7 * 60; // GMT+7 in minutes
+            const localOffset = now.getTimezoneOffset();
+            const vietnamTime = new Date(now.getTime() + (vietnamOffset + localOffset) * 60000);
+            const timeDiff = departureDate - vietnamTime;
+
+            if (timeDiff > 0) {
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                const countdownText = element.querySelector('.countdown-text');
+
+                // ✅ Format: "Còn xx ngày HH:MM:SS" - đếm ngược đến khởi hành
+                const hoursStr = hours.toString().padStart(2, '0');
+                const minutesStr = minutes.toString().padStart(2, '0');
+                const secondsStr = seconds.toString().padStart(2, '0');
+
+                if (days > 0) {
+                    countdownText.textContent = `Còn ${days} ngày ${hoursStr}:${minutesStr}:${secondsStr}`;
+                } else if (hours > 0) {
+                    countdownText.textContent = `Còn ${hoursStr}:${minutesStr}:${secondsStr}`;
+                } else {
+                    countdownText.textContent = `Còn ${minutesStr}:${secondsStr}`;
+                }
+
+                // Đổi màu badge theo thời gian còn lại
+                if (days <= 1) {
+                    element.style.background = 'linear-gradient(90deg, #dc3545 0%, #c82333 100%)'; // Đỏ - rất gấp
+                } else if (days <= 3) {
+                    element.style.background = 'linear-gradient(90deg, #fd7e14 0%, #e55a00 100%)'; // Cam - gấp
+                } else {
+                    element.style.background = 'linear-gradient(90deg, #ffc107 0%, #e0a800 100%)'; // Vàng - bình thường
+                }
+            } else {
+                const countdownText = element.querySelector('.countdown-text');
+                countdownText.textContent = 'Đã khởi hành';
+                element.style.background = 'linear-gradient(90deg, #6c757d 0%, #495057 100%)';
+            }
+        });
+    }
+
+    // ✅ Update countdown mỗi giây
+    setInterval(updateCountdowns, 1000);
+    updateCountdowns(); // Initial call
+</script>

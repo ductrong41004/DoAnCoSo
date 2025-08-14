@@ -1,0 +1,145 @@
+﻿@model IEnumerable<TourDuLich.Models.User>
+@using TourDuLich.Models
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Quản lý User";
+}
+
+@{
+    // Kiểm tra quyền truy cập - chỉ Admin mới được vào
+    var currentUserType = ViewBag.CurrentUserType as int?;
+    bool isAdmin = currentUserType == 2; // Admin có Type = 2
+}
+
+@if (!isAdmin)
+{
+    <!-- Thông báo không có quyền truy cập -->
+    <div class="container mt-4">
+        <div class="alert alert-danger text-center" style="border-radius: 20px; border: 2px solid #dc3545; box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);">
+            <div class="py-5">
+                <i class="bi bi-shield-exclamation display-1 text-danger mb-3"></i>
+                <h2 class="text-danger fw-bold">🚫 TRUY CẬP BỊ TỪ CHỐI</h2>
+                <p class="lead mb-4">Bạn không có quyền truy cập vào trang quản lý User!</p>
+                <p class="text-muted">Chỉ có <strong>Quản trị viên (Admin)</strong> mới được phép truy cập trang này.</p>
+                <div class="mt-4">
+                    <a href="@Url.Action("Index", "Tours")" class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-house-door me-2"></i> Về trang chủ
+                    </a>
+                    <a href="@Url.Action("Index", "AdminTour")" class="btn btn-secondary btn-lg px-5 ms-3">
+                        <i class="bi bi-arrow-left me-2"></i> Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <!-- Nội dung chính cho Admin -->
+    <div class="container mt-4">
+        <!-- Tiêu đề trang nổi bật -->
+        <div class="page-title">
+            <h2><i class="bi bi-people-fill"></i> Quản lý phân quyền User</h2>
+        </div>
+
+        <!-- Thông báo quyền Admin -->
+        <div class="alert alert-success" style="border-radius: 15px; border: 2px solid #28a745;">
+            <i class="bi bi-shield-check text-success me-2"></i>
+            <strong>Chào mừng Admin!</strong> Bạn có quyền quản lý phân quyền người dùng.
+        </div>
+
+        <!-- Bảng với thiết kế đẹp -->
+        <div class="table-container-modern">
+            <table class="table-modern w-100">
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">STT</th>
+                        <th style="width: 12%;">User ID</th>
+                        <th style="width: 25%;">Họ tên</th>
+                        <th style="width: 30%;">Email</th>
+                        <th style="width: 15%;">Phân quyền</th>
+                        <th style="width: 10%;">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int stt = 1;
+                    }
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <form asp-action="UpdateUserType" method="post">
+                            <td>@stt</td>
+                            <td class="text-start">
+                                <strong class="text-primary">@user.UserId</strong>
+                                <input type="hidden" name="userId" value="@user.UserId" />
+                            </td>
+                            <td class="text-start">
+                                <i class="bi bi-person-circle text-info me-2"></i>
+                                <strong>@user.FullName</strong>
+                            </td>
+                            <td class="text-start">
+                                <i class="bi bi-envelope text-warning me-2"></i>
+                                    @user.Email
+                            </td>
+                            <td>
+                                <select name="type" class="form-select form-select-sm" style="border-radius: 15px; border: 2px solid #2196F3; min-width: 120px; width: 100%;">
+                                        @foreach (UserType type in Enum.GetValues(typeof(UserType)))
+                                        {
+                                            var value = Convert.ToInt32(type);
+                                            string display = "";
+                                            string badgeClass = "";
+                                            switch (type)
+                                            {
+                                                case UserType.Customer:
+                                                    display = "👤 Khách thường";
+                                                    badgeClass = "bg-secondary";
+                                                    break;
+                                                case UserType.VIP:
+                                                    display = "⭐ Khách VIP";
+                                                    badgeClass = "bg-warning";
+                                                    break;
+                                                case UserType.Admin:
+                                                    display = "🛡️ Quản trị viên";
+                                                    badgeClass = "bg-danger";
+                                                    break;
+                                            }
+                                            if (type == user.Type)
+                                            {
+                                            <option value="@value" selected>@display</option>
+                                            }
+                                            else
+                                            {
+                                            <option value="@value">@display</option>
+                                            }
+                                        }
+                                </select>
+                            </td>
+                            <td>
+                                <div class="btn-group-modern">
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <i class="bi bi-check-circle me-1"></i> Lưu
+                                    </button>
+                                </div>
+                            </td>
+                            </form>
+                        </tr>
+                        stt++;
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <div class="empty-state">
+                                    <i class="bi bi-people display-1 text-muted"></i>
+                                    <h4 class="text-muted mt-3">Chưa có user nào</h4>
+                                    <p class="text-muted">Hệ thống chưa có người dùng!</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

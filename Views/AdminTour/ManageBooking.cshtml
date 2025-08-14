@@ -1,0 +1,402 @@
+@model IEnumerable<TourDuLich.Models.Booking>
+
+@{
+    ViewData["Title"] = "Quản Lý Đơn Đặt Tour";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="bi bi-clipboard-check me-2"></i>Quản Lý Đơn Đặt Tour</h2>
+                <div class="badge bg-info fs-6">
+                    <i class="bi bi-list-ul me-1"></i>
+                    Tổng: @Model.Count() đơn hàng
+                </div>
+            </div>
+
+            @if (ViewBag.CurrentUserType != 2)
+            {
+                <div class="alert alert-danger">
+                    <i class="bi bi-shield-exclamation me-2"></i>
+                    <strong>Không có quyền truy cập!</strong> Chỉ Admin mới có thể quản lý đơn đặt tour.
+                </div>
+            }
+            else if (!Model.Any())
+            {
+                <div class="alert alert-info text-center">
+                    <i class="bi bi-inbox display-1 text-muted"></i>
+                    <h4 class="mt-3">Chưa có đơn đặt tour nào</h4>
+                    <p class="text-muted">Các đơn đặt tour sẽ hiển thị tại đây khi khách hàng đặt tour.</p>
+                </div>
+            }
+            else
+            {
+                <!-- Danh sách đơn hàng -->
+                <div class="row">
+                    @foreach (var booking in Model)
+                    {
+                        <div class="col-lg-6 col-xl-4 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <!-- Header với status -->
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-receipt me-2"></i>
+                                        Đơn hàng #@booking.BookingId
+                                    </h6>
+                                    <span class="badge @GetStatusBadgeClass(booking.Status) fs-6">
+                                        @GetStatusText(booking.Status)
+                                    </span>
+                                </div>
+
+                                <div class="card-body">
+                                    <!-- Thông tin tour -->
+                                    <div class="mb-3">
+                                        <h6 class="text-primary mb-2">
+                                            <i class="bi bi-geo-alt me-1"></i>
+                                            @booking.Tour?.TourName
+                                        </h6>
+                                        
+                                        <div class="row tour-details text-muted small">
+                                            <div class="col-6">
+                                                <i class="bi bi-calendar-event me-1"></i>
+                                                <strong>Khởi hành:</strong><br>
+                                                @booking.DepartureDate.ToString("dd/MM/yyyy")
+                                            </div>
+                                            <div class="col-6">
+                                                <i class="bi bi-people me-1"></i>
+                                                <strong>Số khách:</strong><br>
+                                                @(booking.AdultCount + booking.ChildCount + booking.InfantCount + booking.BabyCount) người
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Thông tin giá và thanh toán -->
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <div class="payment-info">
+                                                <i class="bi bi-cash-coin me-1 text-success"></i>
+                                                <strong>Tổng tiền:</strong><br>
+                                                <span class="text-danger fw-bold">@booking.TotalPrice.ToString("N0") đ</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="payment-info">
+                                                <i class="bi bi-credit-card me-1"></i>
+                                                <strong>Thanh toán:</strong><br>
+                                                <span class="badge @GetPaymentStatusBadgeClass(booking.PaymentStatus)">
+                                                    @GetPaymentStatusText(booking.PaymentStatus)
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Thông tin khách hàng -->
+                                    <div class="mb-3 small text-muted">
+                                        <i class="bi bi-person me-1"></i>
+                                        <strong>Khách hàng:</strong> @booking.CustomerName<br>
+                                        <i class="bi bi-envelope me-1"></i>
+                                        @booking.CustomerEmail<br>
+                                        <i class="bi bi-telephone me-1"></i>
+                                        @booking.CustomerPhone
+                                    </div>
+
+                                    <!-- Ngày đặt -->
+                                    <div class="booking-date text-muted small">
+                                        <i class="bi bi-clock me-1"></i>
+                                        <strong>Đặt ngày:</strong> @booking.BookingDate.ToString("dd/MM/yyyy HH:mm")
+                                    </div>
+                                </div>
+
+                                <!-- Footer với các nút action -->
+                                <div class="card-footer bg-light">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <!-- Nút Xem chi tiết -->
+                                        <button class="btn btn-outline-info btn-sm flex-fill" 
+                                                onclick="viewBookingDetails(@booking.BookingId)">
+                                            <i class="bi bi-eye me-1"></i>Chi tiết
+                                        </button>
+
+                                        @if (booking.Status == "Pending")
+                                        {
+                                            <!-- Nút Xác nhận -->
+                                            <button class="btn btn-success btn-sm flex-fill" 
+                                                    onclick="confirmBooking(@booking.BookingId)">
+                                                <i class="bi bi-check-circle me-1"></i>Xác nhận
+                                            </button>
+                                        }
+
+                                        @if (booking.Status != "Cancelled")
+                                        {
+                                            <!-- Nút Hủy đơn -->
+                                            <button class="btn btn-outline-danger btn-sm flex-fill" 
+                                                    onclick="cancelBooking(@booking.BookingId)">
+                                                <i class="bi bi-x-circle me-1"></i>Hủy
+                                            </button>
+                                        }
+
+                                        <!-- Nút Liên hệ -->
+                                        <button class="btn btn-outline-primary btn-sm flex-fill" 
+                                                onclick="contactCustomer('@booking.CustomerPhone')">
+                                            <i class="bi bi-telephone me-1"></i>Liên hệ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Modal Chi tiết đơn hàng -->
+<div class="modal fade" id="bookingDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-info-circle me-2"></i>Chi tiết đơn hàng
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="bookingDetailsContent">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Pending" => "bg-warning text-dark",
+            "Confirmed" => "bg-success",
+            "Cancelled" => "bg-danger",
+            "Completed" => "bg-primary",
+            _ => "bg-secondary"
+        };
+    }
+
+    string GetStatusText(string status)
+    {
+        return status switch
+        {
+            "Pending" => "Chờ xác nhận",
+            "Confirmed" => "Tour Đã Xác Nhận",
+            "Cancelled" => "Tour đã bị hủy",
+            "Completed" => "Hoàn thành",
+            _ => "Không xác định"
+        };
+    }
+
+    string GetPaymentStatusBadgeClass(string paymentStatus)
+    {
+        return paymentStatus switch
+        {
+            "Pending" => "bg-warning text-dark",
+            "Paid" => "bg-success",
+            "Failed" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+    string GetPaymentStatusText(string paymentStatus)
+    {
+        return paymentStatus switch
+        {
+            "Pending" => "Chờ thanh toán",
+            "Paid" => "Đã thanh toán",
+            "Failed" => "Thất bại",
+            _ => "Không xác định"
+        };
+    }
+}
+
+<script>
+$(document).ready(function() {
+    // Đảm bảo jQuery đã load
+    console.log('jQuery loaded:', typeof $ !== 'undefined');
+});
+
+// Xem chi tiết đơn hàng
+function viewBookingDetails(bookingId) {
+    $('#bookingDetailsContent').html(`
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Đang tải...</span>
+            </div>
+        </div>
+    `);
+
+    $('#bookingDetailsModal').modal('show');
+
+    $.get('/AdminTour/GetBookingDetails', { bookingId: bookingId })
+        .done(function(response) {
+            if (response.success) {
+                const data = response.data;
+                $('#bookingDetailsContent').html(`
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-person-circle me-2"></i>Thông tin khách hàng</h6>
+                            <table class="table table-sm">
+                                <tr><td><strong>Họ tên:</strong></td><td>${data.customerName || 'N/A'}</td></tr>
+                                <tr><td><strong>Email:</strong></td><td>${data.customerEmail || 'N/A'}</td></tr>
+                                <tr><td><strong>Điện thoại:</strong></td><td>${data.customerPhone || 'N/A'}</td></tr>
+                                <tr><td><strong>Địa chỉ:</strong></td><td>${data.customerAddress || 'N/A'}</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-geo-alt me-2"></i>Thông tin tour</h6>
+                            <table class="table table-sm">
+                                <tr><td><strong>Tour:</strong></td><td>${data.tourName || 'N/A'}</td></tr>
+                                <tr><td><strong>Khởi hành:</strong></td><td>${data.departureDate}</td></tr>
+                                <tr><td><strong>Tổng tiền:</strong></td><td class="text-danger fw-bold">${data.totalPrice} đ</td></tr>
+                                <tr><td><strong>Thanh toán:</strong></td><td>${data.paymentMethod || 'N/A'}</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-people me-2"></i>Số lượng khách</h6>
+                            <table class="table table-sm">
+                                <tr><td>Người lớn:</td><td>${data.adultCount}</td></tr>
+                                <tr><td>Trẻ em:</td><td>${data.childCount}</td></tr>
+                                <tr><td>Em bé:</td><td>${data.infantCount}</td></tr>
+                                <tr><td>Trẻ sơ sinh:</td><td>${data.babyCount}</td></tr>
+                                ${data.singleRoomCount > 0 ? `<tr><td>Phòng đơn:</td><td>${data.singleRoomCount}</td></tr>` : ''}
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="bi bi-chat-text me-2"></i>Ghi chú</h6>
+                            <div class="border p-2 rounded bg-light">
+                                ${data.notes || '<em class="text-muted">Không có ghi chú</em>'}
+                            </div>
+                        </div>
+                    </div>
+                `);
+            } else {
+                $('#bookingDetailsContent').html(`
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        ${response.message}
+                    </div>
+                `);
+            }
+        })
+        .fail(function() {
+            $('#bookingDetailsContent').html(`
+                <div class="alert alert-danger">
+                    <i class="bi bi-wifi-off me-2"></i>
+                    Không thể tải thông tin chi tiết. Vui lòng thử lại!
+                </div>
+            `);
+        });
+}
+
+// Xác nhận đơn hàng
+function confirmBooking(bookingId) {
+    if (confirm('Bạn có chắc chắn muốn xác nhận đơn hàng này?')) {
+        $.post('/AdminTour/ConfirmBooking', {
+            bookingId: bookingId,
+            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+        })
+            .done(function(response) {
+                if (response.success) {
+                    alert('✅ ' + response.message);
+                    location.reload();
+                } else {
+                    alert('❌ ' + response.message);
+                }
+            })
+            .fail(function() {
+                alert('❌ Có lỗi xảy ra. Vui lòng thử lại!');
+            });
+    }
+}
+
+// Hủy đơn hàng
+function cancelBooking(bookingId) {
+    if (confirm('Bạn muốn Hủy đơn hàng của khách hàng?\n\nChọn OK để "Hủy Tour" hoặc Cancel để "Không Hủy".')) {
+        $.post('/AdminTour/CancelBooking', {
+            bookingId: bookingId,
+            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+        })
+            .done(function(response) {
+                if (response.success) {
+                    alert('✅ ' + response.message);
+                    location.reload();
+                } else {
+                    alert('❌ ' + response.message);
+                }
+            })
+            .fail(function() {
+                alert('❌ Có lỗi xảy ra. Vui lòng thử lại!');
+            });
+    }
+}
+
+// Liên hệ khách hàng
+function contactCustomer(phoneNumber) {
+    if (phoneNumber) {
+        const message = `📞 Liên hệ khách hàng:\n\nSố điện thoại: ${phoneNumber}\n\nBạn có thể:\n• Gọi trực tiếp\n• Gửi SMS\n• Sao chép số điện thoại`;
+
+        if (confirm(message + '\n\nNhấn OK để sao chép số điện thoại vào clipboard.')) {
+            // Sao chép số điện thoại vào clipboard
+            navigator.clipboard.writeText(phoneNumber).then(function() {
+                alert('✅ Đã sao chép số điện thoại: ' + phoneNumber);
+            }).catch(function() {
+                alert('📞 Số điện thoại: ' + phoneNumber);
+            });
+        }
+    } else {
+        alert('❌ Không có thông tin số điện thoại!');
+    }
+}
+</script>
+
+<style>
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    }
+
+    .tour-details {
+        font-size: 0.9rem;
+    }
+
+    .payment-info {
+        font-size: 0.9rem;
+    }
+
+    .booking-date {
+        border-top: 1px solid #f0f0f0;
+        padding-top: 10px;
+    }
+
+    .btn-sm {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .gap-2 > * {
+        margin-bottom: 0.25rem;
+    }
+</style>

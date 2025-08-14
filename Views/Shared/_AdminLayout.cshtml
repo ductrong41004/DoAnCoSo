@@ -1,0 +1,642 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>
+        /* Background cơ bản */
+        body {
+            background: #f4f5f7;
+        }
+
+        /* Navbar với màu đen và hiệu ứng shadow */
+        .admin-navbar {
+            background-color: #212121; /* Màu đen sang trọng */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar-brand {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 900;
+            font-size: 1.7rem;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        /* === TIÊU ĐỀ TRANG NỔI BẬT === */
+        .page-title {
+            background: linear-gradient(135deg, #1976d2, #1565c0);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 16px;
+            margin: 20px 0;
+            box-shadow: 0 8px 24px rgba(25, 118, 210, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .page-title::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+                pointer-events: none;
+            }
+
+            .page-title h2 {
+                margin: 0;
+                font-weight: 800;
+                font-size: 2rem;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .page-title .bi {
+                font-size: 2.5rem;
+                animation: pulse 2s infinite;
+            }
+
+        keyframes pulse {
+            0%
+
+        {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+
+        }
+
+        /* Các hộp nội dung */
+        .admin-box, .admin-table-box, .form-tour-legend {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            margin-top: 30px;
+            border: 1px solid #ddd;
+        }
+
+        /* Các ô input */
+        .form-control, .form-select, textarea {
+            border-radius: 12px;
+            background: #fafafa;
+            border: 1.5px solid #e0e0e0;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+            .form-control:focus, .form-select:focus, textarea:focus {
+                border-color: #1976d2;
+                box-shadow: 0 0 10px rgba(25, 118, 210, 0.2);
+            }
+
+        label {
+            font-weight: 600;
+            color: #444;
+        }
+
+        /* Cải thiện các nút button */
+        .btn {
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 8px 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+
+            .btn:focus, .btn:active {
+                box-shadow: none !important;
+                outline: none !important;
+            }
+
+        .btn-success {
+            background-color: #28a745 !important;
+            border-color: #28a745 !important;
+            color: white !important;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            padding: 8px 30px;
+            box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+            .btn-success:hover {
+                background-color: #218838 !important;
+                border-color: #1e7e34 !important;
+                transform: scale(1.05);
+            }
+
+        .btn-danger {
+            background-color: #dc3545 !important;
+            border-color: #dc3545 !important;
+            color: white !important;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            padding: 8px 30px;
+            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333 !important;
+                border-color: #bd2130 !important;
+                transform: scale(1.05);
+            }
+
+        .btn-secondary {
+            background-color: #6c757d !important;
+            border-color: #6c757d !important;
+            color: white !important;
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 8px 30px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268 !important;
+                border-color: #545b62 !important;
+                transform: scale(1.05);
+            }
+
+        .btn-primary {
+            background-color: #1976d2 !important;
+            border-color: #1976d2 !important;
+            color: white !important;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            padding: 8px 30px;
+            box-shadow: 0 2px 6px rgba(25, 118, 210, 0.3);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+            .btn-primary:hover {
+                background-color: #1565c0 !important;
+                border-color: #0d47a1 !important;
+                transform: scale(1.05);
+            }
+
+        /* Card style */
+        .tour-card {
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            margin-bottom: 24px;
+            overflow: hidden;
+            position: relative;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+            .tour-card:hover {
+                box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+                transform: translateY(-6px);
+            }
+
+        .tour-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 14px 14px 0 0;
+        }
+
+        .tour-badge {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            background-color: #ff5e62;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tour-card .p-3 {
+            padding: 20px;
+        }
+
+        .tour-card .fw-bold {
+            font-size: 1.2rem;
+        }
+
+        /* Info hàng ngang */
+        .ivivu-info-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            padding: 16px 32px;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .ivivu-info-item {
+            flex: 1;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+            .ivivu-info-item .bi {
+                font-size: 2rem;
+                color: #1976d2;
+                margin-bottom: 8px;
+            }
+
+            .ivivu-info-item b {
+                color: #ff9800;
+            }
+
+        /* Footer */
+        footer {
+            background-color: #212121;
+            color: #fff;
+            padding: 24px 0;
+        }
+
+            footer .container {
+                text-align: center;
+            }
+
+        /* === BẢNG TOUR THIẾT KẾ HIỆN ĐẠI === */
+        .table-container-modern {
+            background: #ffffff;
+            border: 2px solid #2196F3; /* Xanh biển đậm - màu chủ đạo du lịch */
+            border-radius: 25px; /* Bo tròn góc lớn hơn */
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(33, 150, 243, 0.15);
+            margin: 20px 0;
+        }
+
+        .table-modern {
+            background: #ffffff !important;
+            margin-bottom: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+            /* Header bảng - gradient du lịch */
+            .table-modern thead {
+                background: linear-gradient(135deg, #AFAFA, #E0E0E0) !important; /* Màu nền xám nhạt */
+                border-bottom: 3px solid #2196F3;
+            }
+
+                .table-modern thead th {
+                    background: linear-gradient(135deg, #AFAFA, #E0E0E0) !important;
+                    color: #212121 !important; /* Chữ xám đậm */
+                    border: 1px solid #2196F3 !important;
+                    padding: 25px 20px; /* Tăng padding để thoáng hơn */
+                    font-weight: 800;
+                    font-size: 1rem;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    text-align: center;
+                    vertical-align: middle;
+                    position: relative;
+                }
+
+                    .table-modern thead th:first-child {
+                        border-top-left-radius: 23px;
+                    }
+
+                    .table-modern thead th:last-child {
+                        border-top-right-radius: 23px;
+                    }
+
+            /* Body bảng với giãn dòng */
+            .table-modern tbody tr {
+                background: #ffffff !important;
+                transition: all 0.3s ease;
+                height: 80px; /* Tăng chiều cao hàng để thoáng hơn */
+            }
+
+                .table-modern tbody tr:nth-child(even) {
+                    background: #F4F4F4 !important; /* Màu nền xám rất nhạt cho hàng chẵn */
+                }
+
+                .table-modern tbody tr:hover {
+                    background: #64B5F6 !important; /* Xanh dương nhạt khi hover */
+                    transform: scale(1.02);
+                    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
+                }
+
+            .table-modern tbody td {
+                background: inherit !important;
+                border: 1px solid #2196F3 !important;
+                padding: 20px 15px; /* Tăng padding để thoáng hơn */
+                vertical-align: middle;
+                font-size: 0.95rem;
+                color: #333333;
+                font-weight: 500;
+                text-align: center;
+                line-height: 1.6; /* Tăng line-height */
+            }
+
+            /* Hàng cuối cùng bo tròn */
+            .table-modern tbody tr:last-child td:first-child {
+                border-bottom-left-radius: 23px;
+            }
+
+            .table-modern tbody tr:last-child td:last-child {
+                border-bottom-right-radius: 23px;
+            }
+
+        /* === STYLING CHO ẢNH TOUR CÙNG KÍCH THƯỚC === */
+        .tour-image {
+            width: 90px !important; /* Kích thước cố định */
+            height: 65px !important; /* Kích thước cố định */
+            object-fit: cover;
+            border-radius: 15px; /* Bo tròn nhẹ */
+            border: 2px solid #2196F3;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+            transition: transform 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+
+            .tour-image:hover {
+                transform: scale(1.15);
+                box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+            }
+
+        /* Styling cho trạng thái không có ảnh */
+        .no-image {
+            width: 90px;
+            height: 65px;
+            background: linear-gradient(135deg, #F5F5F5, #E0E0E0);
+            border: 2px solid #2196F3;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+            .no-image .bi {
+                font-size: 1.8rem;
+                color: #2196F3;
+            }
+
+        /* === STYLING CHO CÁC NÚT BO TRÒN === */
+        .btn-group-modern {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+            .btn-group-modern .btn {
+                border-radius: 20px !important; /* Bo tròn nút */
+                padding: 10px 18px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                border: 2px solid transparent;
+                transition: all 0.3s ease;
+                min-width: 80px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            }
+
+                .btn-group-modern .btn:hover {
+                    transform: scale(1.1);
+                    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+                }
+
+        /* Màu nút theo theme du lịch */
+        .btn-warning {
+            background: linear-gradient(135deg, #FF9800, #F57C00) !important;
+            border-color: #FF9800 !important;
+            color: #ffffff !important;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #F44336, #D32F2F) !important;
+            border-color: #F44336 !important;
+            color: #ffffff !important;
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #2196F3, #1976D2) !important;
+            border-color: #2196F3 !important;
+            color: #ffffff !important;
+        }
+
+        /* Styling cho badge số chỗ */
+        .badge {
+            font-size: 0.9rem;
+            padding: 10px 15px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #4CAF50, #388E3C) !important;
+            color: #ffffff !important;
+            border: 2px solid #4CAF50;
+        }
+
+        /* Styling cho số thứ tự */
+        .table-modern tbody td:first-child {
+            font-weight: 800;
+            color: #2196F3;
+            font-size: 1.2rem;
+        }
+
+        /* Styling cho cột giá */
+        .table-modern tbody td.price {
+            font-weight: 800;
+            color: #4CAF50; /* Xanh lá cây */
+            font-size: 1.1rem;
+        }
+
+        /* Styling cho cột tên tour */
+        .table-modern tbody td.text-start strong {
+            color: #1976D2;
+            font-size: 1rem;
+        }
+
+        /* Styling cho cột ngày */
+        .table-modern tbody td.date {
+            color: #757575;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        /* Styling cho trạng thái rỗng */
+        .empty-state {
+            padding: 60px 20px;
+        }
+
+        /* === STYLING CHO FORM CREATE === */
+        .form-container-modern {
+            background: #ffffff;
+            border: 2px solid #2196F3;
+            border-radius: 25px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 15px 35px rgba(33, 150, 243, 0.15);
+        }
+
+        .form-control-modern {
+            border-radius: 15px !important;
+            border: 2px solid #2196F3 !important;
+            padding: 12px 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+            .form-control-modern:focus {
+                border-color: #1976D2 !important;
+                box-shadow: 0 0 15px rgba(33, 150, 243, 0.3) !important;
+                transform: scale(1.02);
+            }
+
+        .form-label {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+            .form-label i {
+                font-size: 1.2rem;
+            }
+
+        /* Preview ảnh */
+        .custom-file-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .preview-image {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid #2196F3;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+            .preview-image:hover {
+                transform: scale(1.1);
+            }
+
+        /* Responsive */
+        media (max-width: 768px) {
+            .btn-group-modern .btn
+
+        {
+            font-size: 0.75rem;
+            padding: 8px 12px;
+            min-width: 70px;
+        }
+
+        .tour-image, .no-image {
+            width: 70px;
+            height: 50px;
+        }
+
+        .table-modern thead th,
+        .table-modern tbody td {
+            padding: 15px 10px;
+            font-size: 0.85rem;
+        }
+
+        .table-modern tbody tr {
+            height: 70px;
+        }
+
+        .page-title h2 {
+            font-size: 1.5rem;
+        }
+
+        .page-title .bi {
+            font-size: 2rem;
+        }
+
+        .form-container-modern {
+            padding: 20px;
+            margin: 10px;
+        }
+
+        .form-control-modern {
+            padding: 10px 15px;
+            font-size: 0.9rem;
+        }
+
+        .preview-image {
+            width: 80px;
+            height: 60px;
+        }
+
+        }
+
+        /* === MEDIA QUERIES === */
+        media (max-width: 991px) {
+            .ivivu-info-row
+
+        {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tour-card {
+            margin-bottom: 16px;
+        }
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- THANH DIEU HUONG -->
+    <nav class="navbar navbar-expand-lg admin-navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="bi bi-globe2"></i> IT THÍCH DU LỊCH
+            </a>
+            <!-- Phan menu va thong tin user -->
+        </div>
+    </nav>
+
+    <div class="container-fluid p-0">
+        @RenderBody()
+    </div>
+
+    <!-- Chan trang -->
+    <footer class="bg-white border-top mt-5 py-3">
+        <div class="container text-center small text-secondary">
+            © 2025 TourBooking. ĐỒ ÁN CƠ SỞ - CÔNG NGHỆ THÔNG TIN K22
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

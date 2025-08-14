@@ -1,0 +1,26 @@
+﻿@model TourDuLich.Models.Tour
+
+@{
+    ViewData["Title"] = "Xóa Tour";
+}
+
+<h2>Bạn chắc chắn muốn xóa tour này?</h2>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Tên tour</dt>
+        <dd class="col-sm-10">@Model.TourName</dd>
+        <dt class="col-sm-2">Giá</dt>
+        <dd class="col-sm-10">@Model.Price.ToString("N0") đ</dd>
+        <dt class="col-sm-2">Khởi hành</dt>
+        <dd class="col-sm-10">@Model.DepartureDate.ToString("dd/MM/yyyy")</dd>
+        <dt class="col-sm-2">Địa điểm</dt>
+        <dd class="col-sm-10">@Model.Location</dd>
+    </dl>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input asp-for="TourId" type="hidden" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
